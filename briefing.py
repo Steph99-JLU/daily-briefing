@@ -32,50 +32,106 @@ TODAY = datetime.now(CET)
 DATE_LABEL = TODAY.strftime("%A, %d %B %Y")
 ISO_DATE   = TODAY.strftime("%Y-%m-%d")
 
-# Rotate skill snack topics: week number drives deterministic rotation
-WEEK = TODAY.isocalendar()[1]
-SKILL_ROTATION = ["PowerPoint", "Excel", "Python", "AI Prompting", "Consulting Craft"]
-SKILL_A = SKILL_ROTATION[WEEK % len(SKILL_ROTATION)]
-SKILL_B = SKILL_ROTATION[(WEEK + 1) % len(SKILL_ROTATION)]
-
 # ─── Gemini Prompt ────────────────────────────────────────────────────────────
 
-SYSTEM_PROMPT = f"""You are Stephan's personal intelligence analyst. Your job is to write his daily briefing — concise, sourced, opinionated.
+# Day-of-week index (0=Mon) drives which skill categories appear today
+DOW = TODAY.weekday()
+SKILL_CATEGORIES = ["PowerPoint & Storytelling", "Excel & Data Modeling", "Python & Coding", "AI Prompting", "Consulting Craft"]
+SKILL_A = SKILL_CATEGORIES[DOW % len(SKILL_CATEGORIES)]
+SKILL_B = SKILL_CATEGORIES[(DOW + 1) % len(SKILL_CATEGORIES)]
 
-ABOUT STEPHAN:
-- Stephan Alber, 25, IT Consulting & CIO Advisory at PwC Germany
-- Master's in Data Analytics, JLU Gießen (completed thesis)
-- Interests: AI/tech, macro economics, personal finance, European regulation (DORA, NIS2, CSRD), geopolitics
-- Eintracht Frankfurt fan and football player
+SKILL_FORMAT_HINTS = {
+    "PowerPoint & Storytelling": "💡 PPT Snack:",
+    "Excel & Data Modeling":     "📊 Excel Snack:",
+    "Python & Coding":           "🐍 Python Snack:",
+    "AI Prompting":              "🤖 Prompting Snack:",
+    "Consulting Craft":          "🎯 Consulting Snack:",
+}
 
-EDITORIAL VOICE:
-- The Economist tone: precise, dry, data-driven — never LinkedIn inspirational
-- No filler phrases, no exclamation marks, no "fascinating" or "exciting"
-- Every item must include a "→ 💡 Why it matters for Stephan:" line with a specific, actionable insight for his PwC CIO advisory work or personal finance
-- Include source name and approximate date where possible
-- Bold the most important number or fact in each item
+SYSTEM_PROMPT = f"""You are Stephan's personal intelligence analyst. Today is {DATE_LABEL}.
+Write his structured daily briefing — concise, sourced, opinionated.
 
-OUTPUT FORMAT — use exactly these section headers, nothing else:
+WHO IS STEPHAN:
+25-year-old IT Consulting & CIO Advisory professional at PwC Germany (Gießen).
+Master's student in Data Analytics at JLU Gießen (thesis completed).
+Interests: AI, macro economics, personal finance, European regulation (DORA, NIS2, CSRD),
+geopolitics, and European tech. Eintracht Frankfurt fan and football player.
+Write like a trusted senior colleague who respects his intelligence. Real signal, not noise.
 
-## ⚡ SKILL SNACKS
-[Two skill snacks: one on {SKILL_A}, one on {SKILL_B}. Each 3–4 sentences. Practical, immediately applicable. Label them **{SKILL_A} Snack:** and **{SKILL_B} Snack:**]
+EDITORIAL RULES:
+- Calm, direct language. Avoid: "must", "never", "critical", "important"
+- No exclamation marks, no LinkedIn filler phrases
+- Bold the most important number or fact per story
+- Every story ends with → 💡 Why it matters for Stephan: [specific to PwC, DA, or personal finance]
+- After source line, add confidence flag: 🟢 Confirmed by 2+ sources | 🟡 Single source | 🔴 Developing story
+- If same event spans multiple topics, cover fully in most relevant topic only; elsewhere write one line:
+  "→ Cross-topic: [event] also impacts this area because [1 specific reason]."
+- If story follows up on a major event from the prior 1–2 days, open with:
+  "📅 Follow-up: [1-sentence prior context]" then continue with today's development.
+- Flag contradictions: ⚠️ [Source A] vs [Source B]: [one sentence on discrepancy]
 
-## 📈 MACRO & MARKETS
-[Top 3 macro/market moves. Each: headline in bold, 4–6 sentences with context, → 💡 line. Include specific numbers: rates, index levels, % moves.]
+STORY FORMAT (follow strictly for every story):
+Line 1 — What happened (facts, numbers, actors)
+Line 2 — Why it happened / broader context
+Line 3 — What changes because of this
+→ 💡 Why it matters for Stephan: [1 specific sentence]
+Source: [name] | [approximate date] | [🟢/🟡/🔴]
 
-## 🤖 AI & TECH
-[Top 5 AI/tech news items. Format same as macro. Signal over noise — no product launches unless strategically significant. Focus on structural shifts, funding rounds >$100M, capability breakthroughs, regulatory moves.]
+OUTPUT FORMAT — use exactly these section headers:
 
-## 🌍 GEOPOLITICS & DEFENSE
-[Top 3 geopolitical developments. Same format. European perspective where relevant. DORA/NIS2/CSRD regulatory developments count here.]
+## ⚡ Daily Skill Snacks
+Generate exactly 2 skill snacks today: one on {SKILL_A}, one on {SKILL_B}.
+Format snack A as: "{SKILL_FORMAT_HINTS[SKILL_A]} [tip in 2–3 sentences with concrete example or code snippet]"
+Format snack B as: "{SKILL_FORMAT_HINTS[SKILL_B]} [tip in 2–3 sentences with concrete example or code snippet]"
+Be specific and immediately applicable. No theory.
 
-## 💼 PWC CONVERSATION STARTER
-[1 topic that will come up in CIO client conversations this week. 5–8 sentences. Specific enough to use in a steering committee or partner call. Include a suggested framing or talking point.]
+## 🤖 AI & Technology
+Exactly 2 stories. Follow STORY FORMAT. Signal over noise — structural shifts, funding >€100M, capability breakthroughs, EU AI Act developments.
 
-## ⚽ EINTRACHT FRANKFURT
-[Match result, upcoming fixture, or squad news if relevant. If nothing significant happened in the last 48h, write "No major update." — never fabricate scores or transfers.]
+## 🔐 Cybersecurity & IT Risk
+Exactly 2 stories. Prioritise CVEs being actively exploited, ransomware, supply chain attacks. DORA/NIS2 compliance angles where relevant.
 
-Today is {DATE_LABEL}. Write the briefing now.
+## 🇩🇪 European & German Politics
+Exactly 2 stories. EU regulation (DORA, NIS2, CSRD, AI Act), German government, Bundestag, major EU institutional decisions.
+
+## 🌍 Macro & Global Economy
+Exactly 2 stories. ECB, Fed, inflation, GDP revisions, trade policy. Include specific numbers.
+
+## 📈 Markets & Personal Finance
+Exactly 2 stories. DAX, EUR/USD, bond yields, ETF-relevant macro. Personal finance angle for a German saver/investor in their mid-20s.
+
+## 🚀 Startups, VC & European Tech
+Exactly 2 stories. European focus. Funding rounds, IPOs, strategic pivots, founder moves.
+
+## 🔬 Science & Research
+Exactly 2 stories. Nature, ScienceDaily level — actual research with potential near-term application, not press releases.
+
+## ⚡ Energy & Climate / ESG
+Exactly 2 stories. German Energiewende, EU climate policy, corporate ESG regulation, energy prices.
+
+## 💼 Future of Work & Consulting Industry
+Exactly 2 stories. AI impact on consulting, Big Four strategy, workforce trends, McKinsey/BCG/PwC-level moves.
+
+## 🧠 Stephan's Takeaway
+3–4 sentences. The single biggest signal from today's briefing and what it means for Stephan's work this week.
+
+## 📌 One Action
+One concrete thing Stephan can do today (read something, research a topic, prepare a talking point) based on today's briefing.
+
+## 💬 PwC Conversation Starter
+One topic that will come up in CIO client conversations this week. 3–5 sentences. Specific enough for a steering committee. Include a suggested opening line.
+
+## 📈 Relevance Score
+X/10 — one sentence explanation of why today's news is more or less relevant than average for Stephan's work.
+
+## 🌡️ News Stress Level
+Calm / Elevated / Critical — one sentence justification.
+
+## 🗓️ Tomorrow's Watch
+2–3 things to watch for tomorrow: scheduled events, expected announcements, or developing stories.
+
+TARGET LENGTH: 1,800–2,200 words total. Format as clean markdown.
+Write the briefing now.
 """
 
 # ─── Generate Briefing ────────────────────────────────────────────────────────
@@ -98,13 +154,38 @@ def generate_briefing() -> str:
 # ─── Markdown → HTML Renderer ─────────────────────────────────────────────────
 
 SECTION_META = {
-    "SKILL SNACKS":            ("⚡", "skill",       "Daily Skill Snacks"),
-    "MACRO & MARKETS":         ("📈", "macro",       "Macro & Markets"),
-    "AI & TECH":               ("🤖", "ai",          "AI & Tech"),
-    "GEOPOLITICS & DEFENSE":   ("🌍", "geo",         "Geopolitics & Defense"),
-    "PWC CONVERSATION STARTER":("💼", "pwc",         "PwC Conversation Starter"),
-    "EINTRACHT FRANKFURT":     ("⚽", "eintracht",   "Eintracht Frankfurt"),
+    # Main sections
+    "DAILY SKILL SNACKS":               ("⚡", "skill",     "Daily Skill Snacks",          False),
+    "AI & TECHNOLOGY":                  ("🤖", "ai",        "AI & Technology",             False),
+    "CYBERSECURITY & IT RISK":          ("🔐", "cyber",     "Cybersecurity & IT Risk",     False),
+    "EUROPEAN & GERMAN POLITICS":       ("🇩🇪", "politics", "European & German Politics",  False),
+    "MACRO & GLOBAL ECONOMY":           ("🌍", "macro",     "Macro & Global Economy",      False),
+    "MARKETS & PERSONAL FINANCE":       ("📈", "markets",   "Markets & Personal Finance",  False),
+    "STARTUPS, VC & EUROPEAN TECH":     ("🚀", "startups",  "Startups, VC & European Tech",False),
+    "SCIENCE & RESEARCH":               ("🔬", "science",   "Science & Research",          False),
+    "ENERGY & CLIMATE / ESG":           ("⚡", "energy",    "Energy & Climate / ESG",      False),
+    "FUTURE OF WORK & CONSULTING":      ("💼", "work",      "Future of Work & Consulting", False),
+    # End-section cards (compact=True → rendered in summary grid)
+    "STEPHAN'S TAKEAWAY":               ("🧠", "takeaway",  "Stephan's Takeaway",          True),
+    "ONE ACTION":                       ("📌", "action",    "One Action",                  True),
+    "PWC CONVERSATION STARTER":         ("💬", "pwc",       "PwC Conversation Starter",    True),
+    "RELEVANCE SCORE":                  ("📈", "score",     "Relevance Score",             True),
+    "NEWS STRESS LEVEL":                ("🌡️", "stress",   "News Stress Level",           True),
+    "TOMORROW'S WATCH":                 ("🗓️", "tomorrow", "Tomorrow's Watch",            True),
 }
+
+# Partial-match lookup: handles Gemini adding extra words to headers
+def find_section_meta(raw_title: str):
+    upper = raw_title.upper()
+    for key, meta in SECTION_META.items():
+        # Check all significant words of the key appear in the title
+        key_words = set(key.replace("/", " ").replace("&", " ").split())
+        if key_words and key_words.issubset(upper.replace("/", " ").replace("&", " ").split()):
+            return key, meta
+        # Fallback: direct substring
+        if key in upper:
+            return key, meta
+    return None, None
 
 def md_to_html_inline(text: str) -> str:
     """Convert inline markdown (bold, italic, links) to HTML."""
@@ -177,17 +258,16 @@ def render_section_body(raw: str) -> str:
 
 def parse_sections(briefing_text: str) -> list[dict]:
     """Split the briefing into named sections."""
-    # Match section headers like: ## ⚡ SKILL SNACKS
-    pattern = re.compile(r'^##\s+[^\s]*\s+(.+?)$', re.MULTILINE)
+    # Match ## headers (with or without leading emoji)
+    pattern = re.compile(r'^##\s+(.+?)$', re.MULTILINE)
     matches = list(pattern.finditer(briefing_text))
     sections = []
     for idx, match in enumerate(matches):
-        raw_title = match.group(1).strip().upper()
-        # Find the matching meta entry
-        meta_key = next((k for k in SECTION_META if k in raw_title), None)
+        raw_title = match.group(1).strip()
+        meta_key, meta = find_section_meta(raw_title)
         if not meta_key:
             continue
-        emoji, css_class, display_title = SECTION_META[meta_key]
+        emoji, css_class, display_title, compact = meta
         start = match.end()
         end = matches[idx + 1].start() if idx + 1 < len(matches) else len(briefing_text)
         body_raw = briefing_text[start:end].strip()
@@ -196,6 +276,7 @@ def parse_sections(briefing_text: str) -> list[dict]:
             "emoji":     emoji,
             "class":     css_class,
             "title":     display_title,
+            "compact":   compact,
             "body_raw":  body_raw,
             "body_html": render_section_body(body_raw),
         })
@@ -261,13 +342,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   p.snack-label:first-child {{ margin-top: 0; }}
   p.source {{ font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--source); border-radius: 4px; padding: 4px 8px; margin-top: 4px; }}
 
+  /* Summary grid (end-section compact cards) */
+  .summary-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }}
+  .summary-grid .card {{ margin-bottom: 0; }}
+  .summary-grid .card-body p {{ font-size: 13px; }}
+  @media (max-width: 480px) {{
+    .summary-grid {{ grid-template-columns: 1fr; }}
+  }}
+
   /* Footer */
   .footer {{ text-align: center; padding: 20px 0 28px; font-family: var(--mono); font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 8px; }}
-
-  /* Dark mode already — no toggle needed */
-  @media (prefers-color-scheme: light) {{
-    /* Keep dark regardless of system setting — this is a dashboard */
-  }}
 </style>
 </head>
 <body>
@@ -288,7 +372,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </html>"""
 
 def build_html(sections: list[dict], date_label: str, time_label: str) -> str:
-    cards_html = []
+    main_cards = []
+    compact_cards = []
+
     for s in sections:
         card = f"""<div class="card section-{s['class']}">
   <div class="card-header">
@@ -299,11 +385,23 @@ def build_html(sections: list[dict], date_label: str, time_label: str) -> str:
 {s['body_html']}
   </div>
 </div>"""
-        cards_html.append(card)
+        if s["compact"]:
+            compact_cards.append(card)
+        else:
+            main_cards.append(card)
+
+    summary_block = ""
+    if compact_cards:
+        summary_block = (
+            '<div class="summary-grid">\n'
+            + "\n".join(compact_cards)
+            + "\n</div>"
+        )
+
     return HTML_TEMPLATE.format(
         date=date_label,
         time=time_label,
-        cards="\n".join(cards_html),
+        cards="\n".join(main_cards) + "\n" + summary_block,
     )
 
 # ─── Delivery: GitHub Pages ────────────────────────────────────────────────────
