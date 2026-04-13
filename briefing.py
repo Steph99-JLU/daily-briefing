@@ -16,11 +16,11 @@ from datetime import datetime, timezone, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-import anthropic
+from openai import OpenAI
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 
-ANTHROPIC_API_KEY   = os.environ["ANTHROPIC_API_KEY"]
+OPENAI_API_KEY      = os.environ["OPENAI_API_KEY"]
 GMAIL_ADDRESS       = os.environ["GMAIL_ADDRESS"]
 GMAIL_APP_PASSWORD  = os.environ["GMAIL_APP_PASSWORD"]
 RECIPIENT_EMAIL     = os.environ["RECIPIENT_EMAIL"]
@@ -134,15 +134,15 @@ TARGET LENGTH: 2,000–2,400 words. Clean markdown. Write the briefing now.
 # ─── Generate Briefing ────────────────────────────────────────────────────────
 
 def generate_briefing() -> str:
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-    print("⏳ Calling Claude Sonnet…")
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    print("⏳ Calling GPT-4o…")
+    response = client.chat.completions.create(
+        model="gpt-4o",
         max_tokens=4096,
         messages=[{"role": "user", "content": SYSTEM_PROMPT}],
     )
-    text = message.content[0].text
-    print(f"✅ Received {len(text)} chars from Claude")
+    text = response.choices[0].message.content
+    print(f"✅ Received {len(text)} chars from GPT-4o")
     return text
 
 # ─── Markdown → HTML Renderer ─────────────────────────────────────────────────
