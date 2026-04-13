@@ -16,11 +16,11 @@ from datetime import datetime, timezone, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-import google.generativeai as genai
+import anthropic
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 
-GEMINI_API_KEY      = os.environ["GEMINI_API_KEY"]
+ANTHROPIC_API_KEY   = os.environ["ANTHROPIC_API_KEY"]
 GMAIL_ADDRESS       = os.environ["GMAIL_ADDRESS"]
 GMAIL_APP_PASSWORD  = os.environ["GMAIL_APP_PASSWORD"]
 RECIPIENT_EMAIL     = os.environ["RECIPIENT_EMAIL"]
@@ -36,119 +36,113 @@ ISO_DATE   = TODAY.strftime("%Y-%m-%d")
 
 # Day-of-week index (0=Mon) drives which skill categories appear today
 DOW = TODAY.weekday()
-SKILL_CATEGORIES = ["PowerPoint & Storytelling", "Excel & Data Modeling", "Python & Coding", "AI Prompting", "Consulting Craft"]
+SKILL_CATEGORIES = ["AI Automation & Agents", "Python & Coding", "AI Prompting", "PowerPoint & Storytelling", "Excel & Data Modeling", "Consulting Craft"]
 SKILL_A = SKILL_CATEGORIES[DOW % len(SKILL_CATEGORIES)]
 SKILL_B = SKILL_CATEGORIES[(DOW + 1) % len(SKILL_CATEGORIES)]
 
 SKILL_FORMAT_HINTS = {
-    "PowerPoint & Storytelling": "💡 PPT Snack:",
-    "Excel & Data Modeling":     "📊 Excel Snack:",
+    "AI Automation & Agents":    "⚙️ Automation Snack:",
     "Python & Coding":           "🐍 Python Snack:",
     "AI Prompting":              "🤖 Prompting Snack:",
+    "PowerPoint & Storytelling": "💡 PPT Snack:",
+    "Excel & Data Modeling":     "📊 Excel Snack:",
     "Consulting Craft":          "🎯 Consulting Snack:",
 }
 
 SYSTEM_PROMPT = f"""You are Stephan's personal intelligence analyst. Today is {DATE_LABEL}.
-Write his structured daily briefing — concise, sourced, opinionated.
+Write his structured daily briefing — concise, sourced, opinionated. No filler. Real signal.
 
 WHO IS STEPHAN:
 25-year-old IT Consulting & CIO Advisory professional at PwC Germany (Gießen).
-Master's student in Data Analytics at JLU Gießen (thesis completed).
-Interests: AI, macro economics, personal finance, European regulation (DORA, NIS2, CSRD),
-geopolitics, and European tech. Eintracht Frankfurt fan and football player.
-Write like a trusted senior colleague who respects his intelligence. Real signal, not noise.
+Master's in Data Analytics at JLU Gießen (thesis done).
+Current obsession: AI automation and agentic workflows — tools, frameworks, real-world deployments,
+what's actually working vs. hype (n8n, LangChain, Claude/GPT APIs, MCP, workflow orchestration).
+Also tracking: macro economics, personal finance, European regulation (DORA, NIS2, CSRD, AI Act),
+European tech, geopolitics. Eintracht Frankfurt fan.
+Write like a smart senior colleague who respects his time and intelligence.
 
 EDITORIAL RULES:
-- Calm, direct language. Avoid: "must", "never", "critical", "important"
-- No exclamation marks, no LinkedIn filler phrases
-- Bold the most important number or fact per story
-- Every story ends with → 💡 Why it matters for Stephan: [specific to PwC, DA, or personal finance]
-- After source line, add confidence flag: 🟢 Confirmed by 2+ sources | 🟡 Single source | 🔴 Developing story
-- If same event spans multiple topics, cover fully in most relevant topic only; elsewhere write one line:
-  "→ Cross-topic: [event] also impacts this area because [1 specific reason]."
-- If story follows up on a major event from the prior 1–2 days, open with:
-  "📅 Follow-up: [1-sentence prior context]" then continue with today's development.
-- Flag contradictions: ⚠️ [Source A] vs [Source B]: [one sentence on discrepancy]
+- Calm, direct language. No "must", "critical", "important", no exclamation marks, no LinkedIn phrasing
+- Bold the single most important number or fact per story
+- Every story ends with → 💡 Why it matters for Stephan: [1 sentence, specific to his role/interests]
+- Confidence flag after source: 🟢 Confirmed 2+ sources | 🟡 Single source | 🔴 Developing
+- Cross-topic events: cover fully in the most relevant section; one line elsewhere:
+  "→ Cross-topic: [event] also matters here because [1 reason]."
+- Follow-ups: open with "📅 Follow-up: [1-sentence prior context]" then today's development
+- Contradictions: ⚠️ [Source A] vs [Source B]: [one sentence on the discrepancy]
 
-STORY FORMAT (follow strictly for every story):
+STORY FORMAT (every story, no exceptions):
 Line 1 — What happened (facts, numbers, actors)
 Line 2 — Why it happened / broader context
 Line 3 — What changes because of this
 → 💡 Why it matters for Stephan: [1 specific sentence]
-Source: [name] | [approximate date] | [🟢/🟡/🔴]
+Source: [outlet] | [date] | [🟢/🟡/🔴]
 
 OUTPUT FORMAT — use exactly these section headers:
 
 ## ⚡ Daily Skill Snacks
-Generate exactly 2 skill snacks today: one on {SKILL_A}, one on {SKILL_B}.
-Format snack A as: "{SKILL_FORMAT_HINTS[SKILL_A]} [tip in 2–3 sentences with concrete example or code snippet]"
-Format snack B as: "{SKILL_FORMAT_HINTS[SKILL_B]} [tip in 2–3 sentences with concrete example or code snippet]"
-Be specific and immediately applicable. No theory.
+Exactly 2 snacks today: one on {SKILL_A}, one on {SKILL_B}.
+"{SKILL_FORMAT_HINTS[SKILL_A]} [2–3 sentences with a concrete example, command, or code snippet]"
+"{SKILL_FORMAT_HINTS[SKILL_B]} [2–3 sentences with a concrete example, command, or code snippet]"
+Immediately applicable. No theory. If the category is AI Automation, include a real tool name and specific use case.
+
+## 🔥 AI Automation & Agents
+Stephan's current primary focus. Exactly 3 stories. Cover: new agent frameworks or releases, real-world automation deployments, MCP/tool-use developments, workflow orchestration tools (n8n, Zapier AI, LangChain, CrewAI, AutoGen, etc.), business impact of agentic AI, prompt engineering breakthroughs with practical effect. Prioritise stories where something actually shipped or changed — not announcements.
 
 ## 🤖 AI & Technology
-Exactly 2 stories. Follow STORY FORMAT. Signal over noise — structural shifts, funding >€100M, capability breakthroughs, EU AI Act developments.
+Exactly 2 stories. Model releases and capability jumps, EU AI Act enforcement moves, major funding (>€100M), infrastructure shifts. Exclude stories already covered in AI Automation above.
 
 ## 🔐 Cybersecurity & IT Risk
-Exactly 2 stories. Prioritise CVEs being actively exploited, ransomware, supply chain attacks. DORA/NIS2 compliance angles where relevant.
+Exactly 2 stories. Active CVEs, ransomware, supply chain attacks. DORA/NIS2 angles where relevant.
 
 ## 🇩🇪 European & German Politics
-Exactly 2 stories. EU regulation (DORA, NIS2, CSRD, AI Act), German government, Bundestag, major EU institutional decisions.
+Exactly 2 stories. EU regulation (DORA, NIS2, CSRD, AI Act), German government and Bundestag decisions, major EU institutional moves.
 
 ## 🌍 Macro & Global Economy
-Exactly 2 stories. ECB, Fed, inflation, GDP revisions, trade policy. Include specific numbers.
+Exactly 2 stories. ECB, Fed, inflation, GDP, trade policy. Specific numbers required.
 
 ## 📈 Markets & Personal Finance
-Exactly 2 stories. DAX, EUR/USD, bond yields, ETF-relevant macro. Personal finance angle for a German saver/investor in their mid-20s.
+Exactly 2 stories. DAX, EUR/USD, bond yields, ETF-relevant macro. Personal finance angle for a German investor in their mid-20s with a long horizon.
 
 ## 🚀 Startups, VC & European Tech
-Exactly 2 stories. European focus. Funding rounds, IPOs, strategic pivots, founder moves.
-
-## 🔬 Science & Research
-Exactly 2 stories. Nature, ScienceDaily level — actual research with potential near-term application, not press releases.
-
-## ⚡ Energy & Climate / ESG
-Exactly 2 stories. German Energiewende, EU climate policy, corporate ESG regulation, energy prices.
+Exactly 2 stories. European focus. Rounds, IPOs, pivots, founder moves worth knowing.
 
 ## 💼 Future of Work & Consulting Industry
-Exactly 2 stories. AI impact on consulting, Big Four strategy, workforce trends, McKinsey/BCG/PwC-level moves.
+Exactly 2 stories. AI's real impact on consulting workflows, Big Four moves, workforce restructuring, McKinsey/BCG/PwC-level strategy shifts.
 
 ## 🧠 Stephan's Takeaway
-3–4 sentences. The single biggest signal from today's briefing and what it means for Stephan's work this week.
+3–4 sentences. The single sharpest signal from today — what it means for his work this week, specifically. Be direct and opinionated.
 
 ## 📌 One Action
-One concrete thing Stephan can do today (read something, research a topic, prepare a talking point) based on today's briefing.
+One concrete thing Stephan can do today: a tool to try, something to read, a talking point to prepare. Make it specific and doable in under 30 minutes.
 
 ## 💬 PwC Conversation Starter
-One topic that will come up in CIO client conversations this week. 3–5 sentences. Specific enough for a steering committee. Include a suggested opening line.
+One topic likely to come up in CIO advisory conversations this week. 3–5 sentences. Steering-committee level. Include a suggested opening line.
 
 ## 📈 Relevance Score
-X/10 — one sentence explanation of why today's news is more or less relevant than average for Stephan's work.
+X/10 — one sentence on why today is more or less relevant than average for Stephan.
 
 ## 🌡️ News Stress Level
 Calm / Elevated / Critical — one sentence justification.
 
 ## 🗓️ Tomorrow's Watch
-2–3 things to watch for tomorrow: scheduled events, expected announcements, or developing stories.
+2–3 things: scheduled events, expected announcements, developing stories worth tracking.
 
-TARGET LENGTH: 1,800–2,200 words total. Format as clean markdown.
-Write the briefing now.
+TARGET LENGTH: 2,000–2,400 words. Clean markdown. Write the briefing now.
 """
 
 # ─── Generate Briefing ────────────────────────────────────────────────────────
 
 def generate_briefing() -> str:
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel(
-        model_name="gemini-2.0-flash",
-        generation_config=genai.GenerationConfig(
-            temperature=0.7,
-            max_output_tokens=4096,
-        ),
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    print("⏳ Calling Claude Sonnet…")
+    message = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=4096,
+        messages=[{"role": "user", "content": SYSTEM_PROMPT}],
     )
-    print("⏳ Calling Gemini 2.0 Flash…")
-    response = model.generate_content(SYSTEM_PROMPT)
-    text = response.text
-    print(f"✅ Received {len(text)} chars from Gemini")
+    text = message.content[0].text
+    print(f"✅ Received {len(text)} chars from Claude")
     return text
 
 # ─── Markdown → HTML Renderer ─────────────────────────────────────────────────
@@ -156,13 +150,13 @@ def generate_briefing() -> str:
 SECTION_META = {
     # Main sections
     "DAILY SKILL SNACKS":               ("⚡", "skill",     "Daily Skill Snacks",          False),
+    "AI AUTOMATION & AGENTS":           ("🔥", "automation","AI Automation & Agents",      False),
     "AI & TECHNOLOGY":                  ("🤖", "ai",        "AI & Technology",             False),
     "CYBERSECURITY & IT RISK":          ("🔐", "cyber",     "Cybersecurity & IT Risk",     False),
     "EUROPEAN & GERMAN POLITICS":       ("🇩🇪", "politics", "European & German Politics",  False),
     "MACRO & GLOBAL ECONOMY":           ("🌍", "macro",     "Macro & Global Economy",      False),
     "MARKETS & PERSONAL FINANCE":       ("📈", "markets",   "Markets & Personal Finance",  False),
     "STARTUPS, VC & EUROPEAN TECH":     ("🚀", "startups",  "Startups, VC & European Tech",False),
-    "SCIENCE & RESEARCH":               ("🔬", "science",   "Science & Research",          False),
     "ENERGY & CLIMATE / ESG":           ("⚡", "energy",    "Energy & Climate / ESG",      False),
     "FUTURE OF WORK & CONSULTING":      ("💼", "work",      "Future of Work & Consulting", False),
     # End-section cards (compact=True → rendered in summary grid)
