@@ -154,6 +154,46 @@ daily-briefing/
 
 ---
 
+## Weekly Monitors
+
+Two on-demand monitors live under `monitors/`. They are meant to be run once a
+week (triggered by a Sunday 20:00 Google Calendar reminder) by typing a phrase
+into a Claude Code session — `Run ADA monitor` or `Run StudIP monitor` — which
+invokes the matching slash command in `.claude/commands/`. Each writes a dated
+markdown report under `monitors/reports/<name>/` and commits it; there is no
+email/Telegram delivery. The lookback window is "since the last recorded run"
+(tracked in `monitors/state.json`), falling back to `MONITOR_LOOKBACK_DAYS`
+(default 7).
+
+| Monitor | Command | Reports |
+|---------|---------|---------|
+| GitLab ADA | `/run-ada-monitor` | commits, merge requests, issues, pipelines, open milestones |
+| StudIP | `/run-studip-monitor` | new files, announcements/news, inbox messages, forum activity, dates/deadlines |
+
+Run directly without the slash command:
+
+```bash
+python monitors/gitlab_ada_monitor.py        # optional: --since 2026-05-18
+python monitors/studip_monitor.py
+```
+
+Required environment variables:
+
+| Variable | Monitor | Notes |
+|----------|---------|-------|
+| `GITLAB_URL` | ADA | base instance URL (default `https://gitlab.com`) |
+| `GITLAB_TOKEN` | ADA | access token with `read_api` scope |
+| `GITLAB_ADA_PROJECT` | ADA | project id or path, e.g. `mygroup/ada` |
+| `STUDIP_URL` | StudIP | default `https://studip.uni-giessen.de` |
+| `STUDIP_USERNAME` / `STUDIP_PASSWORD` | StudIP | or set `STUDIP_TOKEN` for bearer auth |
+
+> Stud.IP REST route names vary by version. Each route is probed independently:
+> if one is unavailable on your instance, the report lists it under "Endpoints
+> that could not be read" and the rest still run — adjust the routes in
+> `monitors/studip_monitor.py` as needed.
+
+---
+
 ## Limitations
 
 - **Gemini knowledge cutoff**: Gemini 2.0 Flash has a training cutoff and may not know events from the last few weeks. For truly current news, consider enabling Google Search grounding (requires Gemini API Pro tier).
