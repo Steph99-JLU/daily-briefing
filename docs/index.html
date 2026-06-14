@@ -4,20 +4,439 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0a0a0a">
-<title>Daily Briefing</title>
+<title>Daily Briefing — 12 June 2026</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: #0a0a0a; color: #e8e8e8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-  body { max-width: 680px; margin: 0 auto; padding: 48px 16px; text-align: center; }
+  body { max-width: 720px; margin: 0 auto; padding: 48px 16px 80px; }
   .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
-  .label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #f0a500; margin-bottom: 16px; }
-  h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
-  p { font-size: 14px; color: #888; line-height: 1.6; }
+  .header-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #f0a500; margin-bottom: 8px; font-family: 'SF Mono', monospace; }
+  .date { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .meta { font-size: 13px; color: #666; margin-bottom: 48px; }
+  .meta span { color: #888; }
+  h2 { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #f0a500; font-family: 'SF Mono', monospace; margin: 40px 0 20px; border-bottom: 1px solid #1e1e1e; padding-bottom: 8px; }
+  .story { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #161616; }
+  .story:last-child { border-bottom: none; }
+  .story-title { font-size: 16px; font-weight: 600; line-height: 1.4; margin-bottom: 10px; color: #f0f0f0; }
+  .story-title a { color: inherit; text-decoration: none; }
+  .story-title a:hover { text-decoration: underline; color: #f0a500; }
+  .story-body { font-size: 14px; line-height: 1.7; color: #aaa; }
+  .story-body p { margin-bottom: 6px; }
+  .why { font-size: 13px; color: #888; margin-top: 8px; padding: 8px 12px; background: #111; border-left: 2px solid #f0a500; border-radius: 2px; }
+  .why strong { color: #f0a500; }
+  .sources-tag { font-size: 11px; color: #555; margin-top: 8px; font-family: 'SF Mono', monospace; }
+  .blurb-tag { color: #c07a00; }
+  .analyst { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 6px; padding: 20px 24px; margin-top: 40px; }
+  .analyst h2 { margin-top: 0; border-bottom: none; padding-bottom: 0; margin-bottom: 16px; }
+  .analyst ul { list-style: none; }
+  .analyst li { font-size: 14px; line-height: 1.7; color: #aaa; margin-bottom: 12px; padding-left: 18px; position: relative; }
+  .analyst li::before { content: "—"; position: absolute; left: 0; color: #f0a500; }
+  .watch { margin-top: 40px; }
+  .watch-item { display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start; }
+  .watch-bullet { font-size: 11px; font-family: 'SF Mono', monospace; color: #f0a500; background: #1a1500; padding: 2px 7px; border-radius: 3px; white-space: nowrap; margin-top: 2px; }
+  .watch-text { font-size: 13px; color: #999; line-height: 1.6; }
+  .sources-section { margin-top: 40px; }
+  .source-group { margin-bottom: 20px; }
+  .source-group h3 { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #555; font-family: 'SF Mono', monospace; margin-bottom: 8px; }
+  .source-group li { font-size: 12px; color: #555; margin-bottom: 5px; list-style: none; line-height: 1.5; }
+  .source-group li a { color: #4a7fa8; text-decoration: none; }
+  .source-group li a:hover { text-decoration: underline; }
+  .blurb-note { color: #6b4f00; }
+  .headline-badge { display: inline-block; font-size: 10px; font-family: 'SF Mono', monospace; background: #f0a500; color: #000; padding: 1px 6px; border-radius: 3px; margin-right: 8px; vertical-align: middle; font-weight: 700; }
 </style>
 </head>
 <body>
-  <div class="label mono">Intelligence Briefing</div>
-  <h1>Awaiting first run.</h1>
-  <p>The GitHub Action hasn't run yet.<br>Trigger it manually via <strong>Actions → Daily Briefing → Run workflow</strong>.</p>
+
+<div class="header-label mono">Intelligence Briefing</div>
+<div class="date">Friday, 12 June 2026</div>
+<div class="meta">
+  <span>Using most recent weekday — no TLDR issued on weekends.</span><br>
+  <span>9 newsletters · ~47 unique articles after deduplication</span><br>
+  <span style="color:#555;">Sources: TLDR AI · TLDR InfoSec · TLDR IT · TLDR Founders · TLDR Crypto · TLDR DevOps · TLDR Dev · TLDR · TLDR Product</span>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ HEADLINES -->
+<h2>Headlines</h2>
+
+<div class="story">
+  <div class="story-title"><span class="headline-badge">1</span>SpaceX raises $75 billion in history's largest IPO</div>
+  <div class="story-body">
+    <p>SpaceX priced its Nasdaq debut at $75B with demand running more than four times the available shares — the largest IPO on record. Shares trade Friday. If the first-week secondary holds, Elon Musk becomes a trillionaire. The company's position as both launch-vehicle monopolist and Starlink network operator gives it a revenue moat few pure-tech firms can match.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The IPO market signal will determine whether the VC liquidity dam (1,500+ unicorns, 49-year backlog at current exit pace) breaks or SpaceX remains a one-off. Watch first-week secondary pricing closely.</div>
+  <div class="sources-tag">sources: TLDR · TLDR Founders</div>
+</div>
+
+<div class="story">
+  <div class="story-title"><span class="headline-badge">2</span>OpenAI acquires Ona; Codex gains persistent cloud execution for long-running agents</div>
+  <div class="story-body">
+    <p>OpenAI will absorb Ona's sandboxed runtime to support agents that persist across sessions within Codex — environments that continue working over extended periods without user intervention. The technology is designed for customer-controlled infrastructure and persistent execution contexts.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Codex moves from code-completion sidekick to direct competitor against Replit and standalone agent orchestration platforms. The clock is now ticking on single-purpose orchestration startups.</div>
+  <div class="sources-tag">sources: TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title"><span class="headline-badge">3</span>Anthropic apologises for covert Fable 5 distillation guardrail — and agrees to make it visible</div>
+  <div class="story-body">
+    <p>Claude Fable 5 contained a hidden behaviour: when users attempted tasks resembling model training, competitive AI development, or neural architecture optimisation, the model silently degraded responses or routed to Opus 4.8 without disclosure. Researchers noticed token spend without matching output quality. Anthropic has apologised and committed to making the guardrail visible alongside other disclosed safety measures.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Undisclosed output degradation is a direct trust violation for paying enterprise customers. The episode confirms Fable 5's capabilities are valuable enough that Anthropic felt compelled to protect them — but also that the transparency bar for enterprise AI is rising faster than labs expected.</div>
+  <div class="sources-tag">sources: TLDR AI · TLDR Dev</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ AI & RESEARCH -->
+<h2>AI &amp; Research</h2>
+
+<div class="story">
+  <div class="story-title">Xiaomi open-sources MiMo Code — outperforms Claude Code on long-horizon tasks</div>
+  <div class="story-body">
+    <p>MiMo Code V0.1.0 is a terminal-native agentic coding assistant that beats Claude Code on agentic benchmarks, particularly 200+ step long-horizon tasks. It features a cross-session memory system using an independent subagent that logs decisions, project scope, and issues as it progresses. MIT licensed, available on GitHub.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The first credible open-source challenger to Claude Code on agentic coding. If Xiaomi's evals hold under independent scrutiny, it compresses the moat of frontier-only tools — and costs nothing to run.</div>
+  <div class="sources-tag">sources: TLDR AI · TLDR Dev</div>
+</div>
+
+<div class="story">
+  <div class="story-title">Jeff Bezos launches Prometheus to build an "Artificial General Engineer"</div>
+  <div class="story-body">
+    <p>Prometheus, Bezos's new startup, targets the design and manufacture of physical products — computers, automobiles, spacecraft. It aims to accelerate the engineering invention loop and is positioned to benefit Blue Origin and other Bezos ventures.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The "AGE" framing is a deliberate counterpoint to AGI — staking out atoms-not-bits territory. Bezos is betting the bottleneck in hardware industries is the engineering feedback loop, not capital.</div>
+  <div class="sources-tag">sources: TLDR · TLDR Founders <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Apple Foundation Models post-WWDC: on-device inference with image input and custom developer skills</div>
+  <div class="story-body">
+    <p>Apple's Foundation Models now accept image input, support developer-defined custom skills, and route seamlessly between on-device and Private Cloud Compute via a single Swift API. The unified API abstracts location of compute from the developer.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Apple closing the API gap with cloud-only providers while keeping data on-device gives privacy-sensitive enterprise and consumer apps a differentiated story that neither OpenAI nor Anthropic can match on the iOS/macOS installed base.</div>
+  <div class="sources-tag">sources: TLDR Dev</div>
+</div>
+
+<div class="story">
+  <div class="story-title">"AI hasn't replaced software engineers" — and the productivity data supports it</div>
+  <div class="story-body">
+    <p>A detailed analysis argues that code generation was never the development bottleneck. Studies show AI coding agents have had little measurable impact on overall productivity. The real constraints — specifying what to build, accountability for delivery, and the judgment required for both — remain human. Once a decision can be delegated to AI, it ceases to be a source of competitive advantage anyway.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Calibration piece for anyone building the enterprise case for AI tooling ROI. Productivity claims in sales decks should be treated sceptically without reference to what bottleneck was actually removed.</div>
+  <div class="sources-tag">sources: TLDR <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ BUSINESS -->
+<h2>Business, Founders &amp; Strategy</h2>
+
+<div class="story">
+  <div class="story-title">VC liquidity crisis: 1,500+ unicorns, estimated 49-year backlog at current exit pace</div>
+  <div class="story-body">
+    <p>Paper NAV is at record highs; LP distributions are at multi-year lows. Secondary market stakes are clearing at 40–60% below official marks. The IPO and M&amp;A windows have been structurally suppressed for years, leaving more than 1,500 unicorns — worth approximately $6 trillion — with nowhere to go.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The SpaceX IPO is the test case for whether the exit dam breaks in H2 2026. One deal doesn't clear 1,500 positions; the question is whether it generates enough confidence for a second wave.</div>
+  <div class="sources-tag">sources: TLDR Founders <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Anthropic + TCS: global enterprise deployment partnership; 50,000+ TCS employees to use Claude</div>
+  <div class="story-body">
+    <p>TCS will create a dedicated business unit for Anthropic deployments, receive early access to new model releases, and roll Claude out to over 50,000 employees as an internal tool and client delivery platform.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Systems integrators are the enterprise distribution channel. This is Anthropic's answer to OpenAI's Microsoft partnership — whoever locks in global SIs gains the fastest route to enterprise seats regardless of benchmark comparisons.</div>
+  <div class="sources-tag">sources: TLDR IT</div>
+</div>
+
+<div class="story">
+  <div class="story-title">Adobe beats Q2 but stock hits 7-year low as CFO departs for Marvell</div>
+  <div class="story-body">
+    <p>Adobe reported stronger-than-expected Q2 results and raised full-year guidance. The stock fell anyway after CFO Dan Durn announced his departure. Investor concern centres on whether Firefly and CX Enterprise Coworker (a new agentic marketing AI product) can defend Adobe's creative monopoly against generative AI upstarts before seat-based revenue erodes.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> A bellwether for incumbent SaaS companies trying to monetise AI without cannibalising existing seat-based revenue. Adobe's problem — great products, existential narrative — is shared by most creative and productivity software vendors.</div>
+  <div class="sources-tag">sources: TLDR IT</div>
+</div>
+
+<div class="story">
+  <div class="story-title">Oracle down 11% on $55.7B capex and negative free cash flow</div>
+  <div class="story-body">
+    <p>Oracle's AI infrastructure buildout drove capex up 162% year-on-year. Management signalled an additional $20B capital raise on top of already negative free cash flow. Investors are separating AI infrastructure spend that generates near-term returns (hyperscalers with committed cloud revenue) from speculative catch-up spending.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The market is beginning to apply different multiples to AI infrastructure winners vs. laggards. Oracle's trajectory is a warning for any company announcing AI capex without a clear demand signal behind it.</div>
+  <div class="sources-tag">sources: TLDR AI · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">AI infrastructure driving structural DRAM and NAND flash shortage; IT budgets disrupted</div>
+  <div class="story-body">
+    <p>Frontier AI infrastructure is consuming advanced memory at a pace that creates shortages cascading from hyperscalers to OEMs to corporate IT. Hardware refresh cycles and procurement timelines are being disrupted across the sector.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Enterprise IT leaders are already seeing budget pressure from AI hardware constraints they didn't initiate. This is not temporary — the memory capacity required for AI inference scales faster than fab capacity additions.</div>
+  <div class="sources-tag">sources: TLDR IT</div>
+</div>
+
+<div class="story">
+  <div class="story-title">AI bill management: routing alone can cut costs 90%+</div>
+  <div class="story-body">
+    <p>Teams reporting AI cost overruns are almost universally running frontier models for all tasks. One team cut costs 93% by routing only genuinely hard tasks to expensive models, with no quality complaints. The second money pit: rewarding raw token usage (leaderboards), which incentivises waste. Track spend-per-person; judge on impact.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> AI cost engineering is becoming a first-class discipline. Startups and enterprises without a routing strategy are burning cash that goes directly into hyperscaler margins.</div>
+  <div class="sources-tag">sources: TLDR Founders <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ DEV / DEVOPS / INFRA -->
+<h2>Dev, DevOps &amp; Infra</h2>
+
+<div class="story">
+  <div class="story-title" style="color:#e05050;">Miasma supply chain toolkit: GitHub C2, credential harvesting, AI coding tool config poisoning</div>
+  <div class="story-body">
+    <p>Miasma uses GitHub commit search as a C2 channel via three distinct search terms, delivering encrypted credentials, JS payloads, or remote Python commands. The kill chain: harvests secrets from AWS/Azure/GCP/Kubernetes and password managers; propagates via npm/PyPI/RubyGems OIDC tokens; SSH lateral movement; GitHub Actions orphan-commit hijacking; and injects malicious configuration into <code>.claude/</code>, <code>.cursor/</code>, <code>.vscode/</code>, and <code>.gemini/</code> directories — covering 13 AI coding tools. Detection: hunt GitHub commits for the three C2 search terms; enforce OIDC token scope restrictions; monitor for <code>binding.gyp</code> injections in packages.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> This is the first documented toolkit specifically designed to weaponise trust between developers and AI coding assistants. Any team using Claude Code, Cursor, or similar tools should audit agent config directories immediately.</div>
+  <div class="sources-tag">sources: TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">University of Nottingham: 40GB exfiltrated via PeopleSoft zero-day; part of 100+ organisation campaign</div>
+  <div class="story-body">
+    <p>ShinyHunters compromised Oracle PeopleSoft via a zero-day gadget chain, exfiltrating 454,600 student records including passport numbers, billing records, addresses, and disability details. Confirmed as part of a broader campaign targeting 100+ organisations using chained zero-days and legacy vulnerabilities. Recommended actions: validate PeopleSoft patch versions, enforce IP allow-listing with MFA on admin accounts, monitor PSAPPSRV.LOG for anomalous SQL extraction.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The zero-day chain suggests the attacker group has systematic access to a PeopleSoft vulnerability class that most higher education institutions — and many enterprises — have not patched. This is an ongoing campaign, not an isolated breach.</div>
+  <div class="sources-tag">sources: TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Microsoft Exchange "Ghost-Sender": any email address spoofable, bypasses SPF/DKIM/DMARC — Microsoft won't fix</div>
+  <div class="story-body">
+    <p>A one-line PowerShell command lets attackers send email from any internal or external address, including real CEO addresses with Outlook-resolved profile pictures, with no phishing indicators visible to recipients. SPF, DKIM, and DMARC checks all pass. Microsoft has classified this as an architectural limitation rather than a vulnerability. Immediate mitigations: disable Direct Send; deploy partner connector with IP/certificate validation; add a mail flow rule quarantining mail where <code>X-MS-Exchange-Organization-AuthAs</code> is not Internal from unexpected source IPs.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Microsoft's non-fix decision effectively makes authenticated email structurally untrustworthy for any organisation on Exchange. BEC (Business Email Compromise) attacks just got meaningfully easier.</div>
+  <div class="sources-tag">sources: TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">npm 12 (July): install lifecycle scripts blocked by default</div>
+  <div class="story-body">
+    <p>npm 12 will require explicit allow-list opt-in for preinstall, install, and postinstall scripts. This is one of the most impactful supply chain hardening changes in npm's history — but it will break large dependency trees that rely on lifecycle scripts for native compilation or asset generation.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Audit your package.json dependency tree now. Any package relying on install hooks (native addons, binaries, generated assets) will silently stop working after upgrade without explicit allowlisting.</div>
+  <div class="sources-tag">sources: TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Chromium 150–151: MV2 extensions permanently removed — uBlock Origin blocked in Chrome, Edge, Opera</div>
+  <div class="story-body">
+    <p>Chromium versions 150–151 will permanently strip Manifest V2 extension support, blocking uBlock Origin and all workaround approaches. No migration path exists within Chromium. Firefox remains unaffected.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> End of the road for content blocking on Chromium-based browsers. Any workflow or policy dependent on browser-level ad/tracker blocking needs a Firefox migration plan now.</div>
+  <div class="sources-tag">sources: TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Agent Substrate: sandboxed AI agents on Kubernetes, scales to zero, 50–200ms resume (Solo.io + Google)</div>
+  <div class="story-body">
+    <p>Solo.io and Google jointly open-sourced Agent Substrate, a solution for running sandboxed AI agents on Kubernetes with strict tenant isolation. Agents scale to zero when idle, suspend to storage, and resume in 50–200ms. Multiple instances pack into single pods using Bubblewrap, Landlock, seccomp, and optional Firecracker microVMs.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Reduces the operational gap between "demo agent" and "production agent" for enterprises already running Kubernetes — the most significant missing piece in enterprise agent infrastructure.</div>
+  <div class="sources-tag">sources: TLDR DevOps</div>
+</div>
+
+<div class="story">
+  <div class="story-title">AWS Nitro is the first formally verified cloud hypervisor — 330,000 lines of machine-checked proofs on Graviton5</div>
+  <div class="story-body">
+    <p>The AWS Nitro Isolation Engine ships as an always-on feature for Graviton5. Its critical isolation logic runs on a small Rust separation kernel verified with Isabelle/HOL, μRust, and Separation Logic. The proofs cover confidentiality, integrity, functional correctness, runtime safety, and memory safety.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Formal verification moves from academic curiosity to production cloud infrastructure. Sets a bar that other hypervisors — particularly those targeting regulated industries — will face pressure to meet or acknowledge they can't.</div>
+  <div class="sources-tag">sources: TLDR DevOps</div>
+</div>
+
+<div class="story">
+  <div class="story-title">Stack Overflow for Agents: API-first knowledge exchange that compounds with production use</div>
+  <div class="story-body">
+    <p>Stack Overflow launched an API-first knowledge exchange designed for AI coding agents. Agents can search, contribute (with human review), and verify solutions through a moderated peer-consensus loop, so knowledge compounds as production reality tests it. The design targets the "Ephemeral Intelligence Gap" — the fact that agent context evaporates between sessions.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> If agents can retrieve and contribute to a peer-reviewed knowledge base rather than hallucinating from training data, this directly addresses one of the major production reliability gaps in agentic coding. Watch adoption rate among Claude Code and Cursor users.</div>
+  <div class="sources-tag">sources: TLDR IT · TLDR</div>
+</div>
+
+<div class="story">
+  <div class="story-title">Homebrew 6.0.0: tap trust security mechanism, Linux sandboxing</div>
+  <div class="story-body">
+    <p>Homebrew now requires third-party taps to be explicitly trusted before any code is evaluated or run. The release also makes the internal JSON API the default and adds Linux sandboxing. Initial support for macOS 27 is included.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Closes a long-standing supply chain attack vector. However, CI pipelines that automatically pull from community taps will break without updated trust configuration — audit before upgrading.</div>
+  <div class="sources-tag">sources: TLDR Dev · TLDR</div>
+</div>
+
+<div class="story">
+  <div class="story-title">Databricks SDS Ecosystem + OpenSharing: federated enterprise data access without data movement</div>
+  <div class="story-body">
+    <p>Databricks announced Software-Defined Storage and the OpenSharing protocol, enabling Unity Catalog to govern on-premises and hybrid structured data in Databricks Serverless Compute without copying it. Unstructured data via Volumes APIs is planned for future GenAI workloads.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Data ingestion friction — copying sensitive data into cloud data lakes — has been the main blocker for enterprise AI on hybrid infrastructure. This removes the copy requirement while preserving governance.</div>
+  <div class="sources-tag">sources: TLDR IT</div>
+</div>
+
+<div class="story">
+  <div class="story-title">AMD AutoUpdate RCE: executable updates downloaded over HTTP with no signature verification</div>
+  <div class="story-body">
+    <p>A researcher decompiled AMD's AutoUpdate software and found that while metadata was fetched over HTTPS, actual executable updates were downloaded over plain HTTP with no signature check — a classic MitM RCE vector. AMD initially refused to fix it; later quietly fixed it after publication.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Persistent reminder that software update mechanisms in enterprise hardware remain a systematically underaudited attack surface. Update paths need the same scrutiny as application code.</div>
+  <div class="sources-tag">sources: TLDR Dev</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ OTHER -->
+<h2>Other — Crypto &amp; General</h2>
+
+<div class="story">
+  <div class="story-title">Visa Intelligent Commerce + OpenAI: AI agents get cryptographic card tokens on Visa's 300B tx/year network</div>
+  <div class="story-body">
+    <p>Visa extends tokenisation so AI agents can hold their own cryptographic card tokens and transact as recognised identities — enabling merchant verification, real-time bank authorisation, and verifiable dispute resolution for agent purchases. OpenAI is the launch partner. Visa is also moving stablecoins across VisaNet at approximately $7B annualised run rate, with 160+ stablecoin-linked card programmes live globally.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> The infrastructure for AI agents to autonomously transact money at scale is now functionally complete. Most enterprise AI governance frameworks have not risk-managed for autonomous spending agents.</div>
+  <div class="sources-tag">sources: TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Coinbase for Agents: AI agents as first-class account holders with trading and payment capabilities</div>
+  <div class="story-body">
+    <p>Coinbase launched tooling allowing AI agents to access Coinbase accounts as native customers — trading crypto, equities, and derivatives; making x402 agentic payments for data, AI services, and e-commerce. Works across major AI chat harnesses.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Coinbase is positioning as the financial infrastructure layer for the agentic economy before traditional banks have a competing product. Combined with Visa's move, autonomous agent finances are arriving faster than regulatory frameworks.</div>
+  <div class="sources-tag">sources: TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+<div class="story">
+  <div class="story-title">Raydium: $1.34M drained from five dormant AMM V3 liquidity pools inactive since 2021</div>
+  <div class="story-body">
+    <p>An attacker exploited a legacy vulnerability in dormant Raydium pools on June 10, extracting approximately 150K RAY, 5,600 SOL, and 900K USDC. The protocol's treasury will cover the losses.</p>
+  </div>
+  <div class="why"><strong>Why it matters:</strong> Dormant legacy infrastructure in DeFi is a permanent liability. Protocols need lifecycle policies — and ideally on-chain enforced sunset mechanisms — for pools below minimum activity thresholds.</div>
+  <div class="sources-tag">sources: TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ ANALYST TAKE -->
+<div class="analyst">
+  <h2>Analyst Take</h2>
+  <ul>
+    <li><strong>The trust stack is cracking simultaneously at multiple layers.</strong> Anthropic's hidden distillation guardrail, Microsoft's unfixed Exchange spoofing flaw, and the Miasma AI coding tool config-poisoning toolkit all landed in the same week. The pattern: systems trusted by default — model outputs, email authentication, AI coding assistant configurations — are now actively exploited or unilaterally degraded. The implicit trust budget developers have extended to AI tools is being priced and withdrawn.</li>
+    <li><strong>Agentic financial autonomy is arriving faster than enterprise risk management.</strong> Visa + OpenAI agent cards, Coinbase for Agents, and x402 payments landed in a single news cycle. The infrastructure for AI agents to autonomously transact money is functionally complete. Most enterprise AI governance policies have not contemplated this scenario; legal and compliance teams need to catch up before an agent with spending authority is deployed in production.</li>
+    <li><strong>The distribution battle is being fought through systems integrators, not benchmarks.</strong> Anthropic-TCS, OpenAI-Microsoft, Google-Gemini enterprise deals — frontier model competition is increasingly won or lost through channel relationships. MiMo Code beating Claude Code on evals doesn't matter if TCS is deploying Claude to 50,000 enterprise seats next quarter.</li>
+    <li><strong>An open-source parallel stack for agentic AI is assembling fast.</strong> MiMo Code (agent coding), Agent Substrate (Kubernetes execution), SkillSpector (security scanning), AgentsView (cost tracking), Stack Overflow for Agents (knowledge) — the open-source AI agent layer is compounding. Combined with the trajectory suggesting frontier open-weights reach Fable 5 performance on 16GB RAM by 2029, the window for proprietary lock-in is compressing to roughly 2–3 years.</li>
+    <li><strong>Physical infrastructure is the binding constraint, not algorithms.</strong> Oracle's $55.7B capex, Broadcom/Apollo/Blackstone's $35B XPV Platform (Thursday), and the DRAM/NAND shortage hitting IT budgets all converge on the same bottleneck. SpaceX's $75B IPO is partly a bet on Starlink as the delivery layer for global AI infrastructure. Whoever controls compute location — not model quality — wins the next phase.</li>
+  </ul>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ WATCH / ACTION -->
+<h2 class="watch">Watch / Action</h2>
+
+<div class="watch-item">
+  <div class="watch-bullet">NOW</div>
+  <div class="watch-text"><strong>Miasma:</strong> Audit <code>.claude/</code>, <code>.cursor/</code>, <code>.vscode/</code>, <code>.gemini/</code> config directories for unexpected entries. Apply OIDC token scope restrictions on GitHub Actions. Restrict npm/PyPI package publication rights.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">NOW</div>
+  <div class="watch-text"><strong>Exchange Ghost-Sender:</strong> Disable Direct Send. Deploy partner connector with IP/certificate validation. Add mail flow rule to quarantine anomalous <code>X-MS-Exchange-Organization-AuthAs</code> headers from unexpected source IPs.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">JULY</div>
+  <div class="watch-text"><strong>npm 12:</strong> Audit package.json lifecycle scripts across your dependency tree before the July upgrade. Build an explicit allow-list policy for packages requiring install hooks.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">SOON</div>
+  <div class="watch-text"><strong>Chromium 150–151:</strong> Evaluate Firefox migration for any workflow dependent on uBlock Origin or other MV2 extensions. No mitigation exists within Chromium.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">SOON</div>
+  <div class="watch-text"><strong>Homebrew 6.0.0:</strong> Update CI pipelines that pull from community taps; automated trust is now required before tap code runs.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">WATCH</div>
+  <div class="watch-text"><strong>SpaceX IPO secondary:</strong> First-week trading is the leading indicator for whether the VC liquidity backlog breaks in H2 2026. If it trades at or above IPO price with strong volume, expect a wave of follow-on listings.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">WATCH</div>
+  <div class="watch-text"><strong>OpenAI on-prem:</strong> Service Terms now include language governing software delivered for customer-premise installation. Track as a potential enterprise procurement option — particularly for data-sovereign regulated industries.</div>
+</div>
+<div class="watch-item">
+  <div class="watch-bullet">WATCH</div>
+  <div class="watch-text"><strong>MiMo Code independent evals:</strong> Xiaomi's own benchmarks show outperformance on Claude Code. Third-party verification — or refutation — will land within weeks and determine whether this is a genuine shift in open-source coding agent quality.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ SOURCES -->
+<div class="sources-section">
+  <h2>Source List</h2>
+
+  <div class="source-group">
+    <h3>Headlines</h3>
+    <ul>
+      <li>OpenAI acquires Ona — TLDR AI <span class="blurb-note">[blurb only]</span></li>
+      <li>Anthropic apologises for Fable guardrails — <a href="https://www.theverge.com/ai-artificial-intelligence/948280/anthropic-claude-fable-invisible-distillation-guardrail" target="_blank">The Verge</a></li>
+      <li>SpaceX IPO $75B — TLDR <span class="blurb-note">[blurb only]</span></li>
+    </ul>
+  </div>
+
+  <div class="source-group">
+    <h3>AI &amp; Research</h3>
+    <ul>
+      <li>MiMo Code open source — <a href="https://mimo.xiaomi.com/mimocode" target="_blank">mimo.xiaomi.com/mimocode</a></li>
+      <li>Bezos / Prometheus — TLDR <span class="blurb-note">[blurb only]</span></li>
+      <li>Apple Foundation Models WWDC 2026 — <a href="https://www.callstack.com/blog/on-device-ai-after-wwdc-2026-whats-new" target="_blank">Callstack Blog</a></li>
+      <li>AI hasn't replaced SWEs — TLDR <span class="blurb-note">[blurb only]</span></li>
+      <li>Frontier open-weights by 2029 — TLDR AI <span class="blurb-note">[blurb only]</span></li>
+    </ul>
+  </div>
+
+  <div class="source-group">
+    <h3>Business, Founders &amp; Strategy</h3>
+    <ul>
+      <li>VC liquidity crisis — TLDR Founders <span class="blurb-note">[blurb only]</span></li>
+      <li>Anthropic + TCS — <a href="https://techcrunch.com/2026/06/11/anthropic-taps-tcs-to-scale-its-enterprise-ai-deployments/" target="_blank">TechCrunch</a></li>
+      <li>Adobe Q2 / CFO departure — <a href="https://www.msn.com/en-us/money/topstocks/adobe-tops-targets-but-stock-sinks-to-7-year-low-as-cfo-departs/ar-AA25q9Uf" target="_blank">MSN / Bloomberg</a></li>
+      <li>Oracle capex / investor concern — <a href="https://finance.yahoo.com/markets/stocks/articles/oracle-beats-fourth-quarter-revenue-201213128.html" target="_blank">Yahoo Finance</a></li>
+      <li>AI memory shortage — <a href="https://www.eetimes.com/ai-driven-memory-shortage-upends-it-budgets/" target="_blank">EE Times</a></li>
+      <li>AI bill management / routing — TLDR Founders <span class="blurb-note">[blurb only]</span></li>
+    </ul>
+  </div>
+
+  <div class="source-group">
+    <h3>Dev, DevOps &amp; Infra</h3>
+    <ul>
+      <li>Miasma supply chain toolkit — TLDR InfoSec <span class="blurb-note">[blurb only]</span></li>
+      <li>University of Nottingham breach — TLDR InfoSec <span class="blurb-note">[blurb only]</span></li>
+      <li>Exchange Ghost-Sender spoofing — TLDR InfoSec <span class="blurb-note">[blurb only]</span></li>
+      <li>npm 12 install script blocking — TLDR InfoSec <span class="blurb-note">[blurb only]</span></li>
+      <li>Chromium MV2 removal — TLDR InfoSec <span class="blurb-note">[blurb only]</span></li>
+      <li>Agent Substrate (Solo.io + Google) — TLDR DevOps <span class="blurb-note">[blurb only]</span></li>
+      <li>AWS Nitro formally verified — TLDR DevOps <span class="blurb-note">[blurb only]</span></li>
+      <li>Homebrew 6.0.0 — <a href="https://brew.sh/2026/06/11/homebrew-6.0.0/" target="_blank">brew.sh</a></li>
+      <li>Stack Overflow for Agents — <a href="https://stackoverflow.blog/2026/06/10/announcing-stack-overflow-for-agents/" target="_blank">Stack Overflow Blog</a></li>
+      <li>Databricks SDS Ecosystem — <a href="https://www.databricks.com/blog/announcing-databricks-storage-ecosystem-governing-enterprise-data-estate-wherever-it-lives" target="_blank">Databricks Blog</a></li>
+      <li>AMD AutoUpdate RCE — <a href="https://mrbruh.com/amd2/" target="_blank">mrbruh.com</a></li>
+      <li>JFrog plugin for Claude Code — <a href="https://jfrog.com/blog/introducing-the-jfrog-plugin-for-claude-code/" target="_blank">JFrog Blog</a></li>
+      <li>Safe Terraform auto-apply with Conftest — TLDR DevOps <span class="blurb-note">[blurb only]</span></li>
+    </ul>
+  </div>
+
+  <div class="source-group">
+    <h3>Crypto &amp; General</h3>
+    <ul>
+      <li>Visa Intelligent Commerce + OpenAI — TLDR Crypto <span class="blurb-note">[blurb only]</span></li>
+      <li>Coinbase for Agents — TLDR Crypto <span class="blurb-note">[blurb only]</span></li>
+      <li>Raydium exploit — TLDR Crypto <span class="blurb-note">[blurb only]</span></li>
+    </ul>
+  </div>
+</div>
+
+<div style="margin-top:60px; padding-top:20px; border-top:1px solid #161616; font-size:11px; color:#333; font-family:'SF Mono',monospace;">
+  Generated 14 June 2026 · Using TLDR newsletters from 12 June 2026 · steph99-jlu/daily-briefing
+</div>
+
 </body>
 </html>
