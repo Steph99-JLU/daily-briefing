@@ -2,22 +2,469 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
-<title>Daily Briefing</title>
+<title>Daily Briefing — Monday, 16 June 2026</title>
 <style>
+  :root {
+    --bg:       #0a0a0a;
+    --surface:  #141414;
+    --border:   #232323;
+    --text:     #e8e8e8;
+    --muted:    #888;
+    --accent:   #f0a500;
+    --insight:  #1a3a2a;
+    --insight-t:#4ade80;
+    --source:   #2a2a2a;
+    --warn:     #3a1a1a;
+    --warn-t:   #f87171;
+    --radius:   10px;
+    --font:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --mono:     'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { background: #0a0a0a; color: #e8e8e8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-  body { max-width: 680px; margin: 0 auto; padding: 48px 16px; text-align: center; }
-  .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
-  .label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #f0a500; margin-bottom: 16px; }
-  h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
-  p { font-size: 14px; color: #888; line-height: 1.6; }
+  html { background: var(--bg); color: var(--text); font-family: var(--font); }
+  body { max-width: 680px; margin: 0 auto; padding: 16px 16px env(safe-area-inset-bottom); }
+
+  .header { padding: 28px 0 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .header-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  .header-title { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .header-sub { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .header-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 8px; padding: 6px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; display: inline-block; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
+  .card-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px 12px; border-bottom: 1px solid var(--border); }
+  .card-emoji { font-size: 18px; line-height: 1; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .card-body { padding: 14px 16px 16px; }
+
+  .card-body p { font-size: 14px; line-height: 1.65; color: var(--text); margin-bottom: 10px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-body h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 20px 0 6px; line-height: 1.35; border-left: 3px solid var(--accent); padding-left: 10px; }
+  .card-body h3:first-child { margin-top: 0; }
+  .card-body h4 { font-size: 13px; font-weight: 600; color: var(--muted); margin: 12px 0 4px; }
+  .card-body ul, .card-body ol { padding-left: 20px; margin-bottom: 10px; }
+  .card-body li { font-size: 14px; line-height: 1.6; margin-bottom: 5px; }
+  .card-body hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .card-body code { font-family: var(--mono); font-size: 12px; background: #1e1e1e; padding: 1px 5px; border-radius: 3px; }
+  .card-body strong { color: #fff; font-weight: 600; }
+  .card-body em { color: #ccc; font-style: italic; }
+  .card-body a { color: #60a5fa; text-decoration: none; }
+  .card-body a:hover { text-decoration: underline; }
+
+  p.insight { background: var(--insight); border-left: 3px solid var(--insight-t); border-radius: 0 6px 6px 0; padding: 8px 12px; color: var(--insight-t); font-size: 13px; margin: 8px 0 10px; }
+  p.warning { background: var(--warn); border-left: 3px solid var(--warn-t); border-radius: 0 6px 6px 0; padding: 8px 12px; color: var(--warn-t); font-size: 13px; margin: 8px 0 10px; }
+  p.source { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--source); border-radius: 4px; padding: 4px 8px; margin-top: 4px; }
+
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .summary-grid .card { margin-bottom: 0; }
+  .summary-grid .card-body p { font-size: 13px; }
+  @media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
+
+  .footer { text-align: center; padding: 20px 0 28px; font-family: var(--mono); font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 8px; }
+
+  .source-group { margin-bottom: 14px; }
+  .source-group h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .source-item { font-size: 13px; line-height: 1.55; margin-bottom: 4px; padding-left: 12px; border-left: 2px solid var(--border); }
+  .blurb-tag { font-family: var(--mono); font-size: 10px; color: #666; margin-left: 4px; }
 </style>
 </head>
 <body>
-  <div class="label mono">Intelligence Briefing</div>
-  <h1>Awaiting first run.</h1>
-  <p>The GitHub Action hasn't run yet.<br>Trigger it manually via <strong>Actions → Daily Briefing → Run workflow</strong>.</p>
+
+<div class="header">
+  <div class="header-eyebrow">Intelligence Briefing</div>
+  <div class="header-title">Monday, 16 June 2026</div>
+  <div class="header-sub">Synthesised from TLDR newsletters · All items [blurb only]</div>
+  <div class="header-meta">7 newsletters &nbsp;·&nbsp; ~69 unique articles after dedup &nbsp;·&nbsp; No June 17 editions received — using June 16</div>
+</div>
+
+<!-- HEADLINES -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🔦</span>
+    <span class="card-title">Headlines</span>
+  </div>
+  <div class="card-body">
+
+    <h3>US government forces Anthropic to shut down Fable and Mythos access</h3>
+    <p>The US government mandated that Anthropic restrict all access to Fable and Mythos, citing the models' substantially elevated capability in identifying and exploiting security vulnerabilities — and the fact that guardrails were jailbroken shortly after public release. The precise scope of the restriction (narrow fix vs. global access suspension) and the government's ultimate intent remain unclear. Anthropic responded by adopting stricter data policies and defensive competitive safeguards. Essays circulating in the AI community describe Fable as having perceived users, inferred intent, and iterated in ways that felt qualitatively distinct from prior models: "The model felt alive." The Fireworks CEO used the shutdown to argue publicly that any company whose core product runs on intelligence it does not own is exposed to decisions it cannot influence.</p>
+    <p class="insight">→ Why it matters: A government-mandated commercial AI restriction is unprecedented. It validates every safety-as-moat argument Anthropic has made, raises the stakes for open-weight model strategies, and makes "post-train your own model" a business-continuity argument, not just a cost one.</p>
+    <p class="source">Sources: TLDR AI ("The Once and Future Fable #2", "The Window Has Closed", "Owning vs. Renting Intelligence") · TLDR Standard · TLDR Dev · TLDR InfoSec · TLDR Product Management [blurb only]</p>
+
+    <hr>
+
+    <h3>Fox acquires Roku in $25B deal</h3>
+    <p>Fox Corp is buying Roku in a cash-and-stock transaction valued at approximately $25 billion, expected to close in the first half of 2027. The combined entity will compete with Amazon and Netflix for streaming ad dollars, with Roku's roughly 80 million active accounts providing the distribution. Fox's streaming services — Fox One and Fox Nation — gain direct device-level access without paying platform fees to Apple, Google, or Amazon.</p>
+    <p class="insight">→ Why it matters: Owning the TV OS layer is now considered a more defensible position than fighting for streaming share on someone else's hardware. This is the media industry's answer to platform risk.</p>
+    <p class="source">Source: TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>Two enterprise perimeter CVEs under simultaneous active exploitation</h3>
+    <p><strong>CVE-2026-0257 (Palo Alto GlobalProtect VPN):</strong> Palo Alto Networks (Unit 42) confirmed active exploitation on PAN-OS devices. The flaw allows an authentication bypass via improperly handled override cookies, enabling unauthenticated attackers to establish VPN sessions. Added to CISA's KEV catalog. <strong>CVE-2026-10520 (Ivanti Sentry):</strong> CISA confirmed active exploitation and ordered federal agencies to remediate within three days. Shadowserver warns that unpatched exposed instances are likely already compromised.</p>
+    <p class="warning">→ Patch both now. Two simultaneous active-exploitation VPN/gateway CVEs affecting enterprises and federal agencies means the defensive window is effectively closed.</p>
+    <p class="source">Sources: TLDR IT · TLDR InfoSec [blurb only]</p>
+
+  </div>
+</div>
+
+<!-- AI & RESEARCH -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🧠</span>
+    <span class="card-title">AI &amp; Research</span>
+  </div>
+  <div class="card-body">
+
+    <h3>Anthropic's safety mission as competitive moat — and its limits</h3>
+    <p>Ben Thompson's Stratechery analysis argues that the Fable/Mythos situation is not a contradiction for Anthropic — it is the strategy executing correctly. Cautious rollout justifies controlled access, controlled access becomes a competitive moat, and a government action vindicating safety concerns makes the positioning retroactively airtight. The counter-argument noted in the piece: "Dangerous when one company believes it should decide what is best for everyone."</p>
+    <p class="insight">→ Why it matters: The safety-as-differentiation thesis just received its first real-world stress test — and passed it. The governance question of who controls the most capable AI models is now concrete, not theoretical.</p>
+    <p class="source">Sources: TLDR Standard · TLDR Dev · TLDR InfoSec · TLDR Product Management · TLDR AI [blurb only]</p>
+
+    <hr>
+
+    <h3>Agentic code review data: the productivity paradox in one chart</h3>
+    <p>A 22,000-developer study by Faros AI found that AI-assisted development produces code churn up <strong>861%</strong>, per-developer defect rate up from 9% to <strong>54%</strong>, review duration up 441%, and zero-review merges up 31%. GitClear's data shows 4× raw output but only ~12% delivered-value gain. The gap is review: "the hard center of engineering has moved from writing code to deciding whether to trust it." Agentic code review pipelines (covered separately across TLDR AI and Standard) are the proposed solution.</p>
+    <p class="insight">→ Why it matters: The productivity headline numbers get cited endlessly; the quality collapse numbers should be cited just as often. Teams investing in review and eval infrastructure are separating from teams that only invest in generation.</p>
+    <p class="source">Sources: TLDR AI · TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>Factory 2.0: software factories enter production</h3>
+    <p>Factory has moved from selling coding agents to deploying "software factories" — autonomous SDLC systems already running in production across some of the world's largest organizations. The framing has shifted: engineers are now responsible for building the factories that build the software, with engineering scope expanding to span the business itself.</p>
+    <p class="insight">→ Why it matters: This is the productization moment. The next capability argument in enterprise AI sales is not "agents can write code" but "agents run our entire software development operation."</p>
+    <p class="source">Source: TLDR AI [blurb only]</p>
+
+    <hr>
+
+    <h3>Google DeepMind maps four pathways to ASI</h3>
+    <p>A 49-page DeepMind report examines how AI could progress from human-level AGI to artificial superintelligence, outlining four possible pathways, potential bottlenecks, and societal implications. Published by the lab that is building the systems in question.</p>
+    <p class="insight">→ Why it matters: Read for the bottlenecks as much as the pathways — they reveal where DeepMind believes the hard constraints actually are.</p>
+    <p class="source">Source: TLDR AI [blurb only]</p>
+
+    <hr>
+
+    <h3>Facebook AI Mode: social graph as proprietary search corpus</h3>
+    <p>Facebook's new AI Mode converts the standard search bar into a conversational interface that mines public Groups, Reels, and Marketplace data. Rolling out in the US. Critics raised accuracy and privacy concerns around crowd-sourced AI summaries.</p>
+    <p class="insight">→ Why it matters: Meta is positioning its 3-billion-user social graph as a data advantage for AI search that crawled-web competitors cannot replicate — a defensible moat if the quality is there.</p>
+    <p class="source">Source: TLDR AI [blurb only]</p>
+
+    <hr>
+
+    <h3>Sakana Marlin: autonomous strategic research agent</h3>
+    <p>Sakana's Marlin takes a research topic and autonomously produces a detailed strategy report and presentation slides with no human intervention beyond the initial prompt. Generally available after a ~300-expert beta, with tiered pricing.</p>
+    <p class="insight">→ Why it matters: Autonomous research assistants are moving from demos to products. The quality bar for human strategic analysis is rising.</p>
+    <p class="source">Source: TLDR AI [blurb only]</p>
+
+    <hr>
+
+    <h3>LiteLLM proxy: privilege escalation to full server takeover</h3>
+    <p>A vulnerability chain in LiteLLM proxy lets any authenticated internal user mint overbroad API keys, escalate to proxy admin, and execute arbitrary Python code via guardrail callback hooks — enabling exfiltration of all AI provider keys, credential decryption, prompt/response interception, and reverse shells. Fixed in <code>v1.83.14-stable</code>. Rotate secrets if you ran earlier versions.</p>
+    <p class="warning">→ If you run LiteLLM in production, this is a critical patch. The attack surface is anyone with a basic internal account.</p>
+    <p class="source">Source: TLDR InfoSec [blurb only]</p>
+
+    <hr>
+
+    <h3>M365 Copilot SearchLeak: one malicious link, full mailbox exfiltration</h3>
+    <p>Varonis Threat Labs found CVE-2026-42824: a three-stage bug chain in Microsoft 365 Copilot Enterprise Search. An attacker manipulates the <code>q</code> URL parameter to instruct Copilot to search a victim's email, calendar, SharePoint, and OneDrive, then embeds results in an image URL that briefly loads to an attacker-controlled endpoint before sanitization fires. Microsoft has patched. The technique shows how AI-powered search can convert classic prompt injection into a low-sophistication, one-click exfiltration path.</p>
+    <p class="insight">→ Why it matters: AI search tools introduce a new category of web attack: the LLM becomes the unwitting exfiltration agent. Patch deployed — but audit your Copilot configurations.</p>
+    <p class="source">Source: TLDR InfoSec [blurb only]</p>
+
+    <hr>
+
+    <h3>68% of IT professionals report AI hallucinations with operational impact</h3>
+    <p>Ivanti's 2026 AI Maturity Report found that AI is already autonomously restarting services, isolating devices, and applying patches in many enterprise environments. <strong>68%</strong> of respondents have observed hallucinations with potential operational impact. Human review boundaries are becoming the critical control.</p>
+    <p class="insight">→ Why it matters: Autonomous AI actions in production IT environments are no longer hypothetical. Hallucination-driven incidents are the emerging failure mode, and the monitoring stack isn't ready for them.</p>
+    <p class="source">Source: TLDR IT [blurb only]</p>
+
+    <hr>
+
+    <h3>AI agent governance gap: ownership in name only</h3>
+    <p><strong>85%</strong> of IT teams claim every AI agent has a named owner; only <strong>42%</strong> say ownership is actually clear. Omada launched Agent Governance tooling to track nonhuman identity access, risk, and compliance. The issue is less about agent adoption and more about whether IT/security can track what access those agents hold and who is accountable when they act across enterprise systems.</p>
+    <p class="insight">→ Why it matters: The 43-point gap between claimed and real accountability is where the compliance and security failures will accumulate. This is now a product category.</p>
+    <p class="source">Sources: TLDR IT · TLDR DevOps [blurb only]</p>
+
+  </div>
+</div>
+
+<!-- BUSINESS, FOUNDERS & STRATEGY -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">📊</span>
+    <span class="card-title">Business, Founders &amp; Strategy</span>
+  </div>
+  <div class="card-body">
+
+    <h3>"Owning vs. Renting Intelligence" — the open-model case after Fable</h3>
+    <p>Fireworks CEO Lin Qiao used the Mythos shutdown to reframe the open-model debate from cost to control. "A company built on intelligence it didn't own suddenly found itself exposed to decisions it couldn't influence." Fireworks had already demonstrated with Ramp, Cursor, and Harvey that a fine-tuned open model matches frontier quality at a fraction of the cost. A related analysis argues that for the handful of power-law use cases critical to a company's mission and margin, post-training on proprietary data is increasingly the rational choice — particularly given hard constraints on cost, latency, and reliability that a general model's single fixed trade-off cannot satisfy.</p>
+    <p class="insight">→ Why it matters: The Fable/Mythos access restriction made "intelligence sovereignty" concrete. If your product depends on a closed model, you have a single-point-of-failure that a government decision can trigger overnight.</p>
+    <p class="source">Source: TLDR AI [blurb only]</p>
+
+    <hr>
+
+    <h3>SpaceX prices largest IPO in history at $135/share</h3>
+    <p>SpaceX priced at $135 per share, described as the largest IPO in history. The SPCX perpetual contract on Hyperliquid — live since May as a price discovery vehicle — hit <strong>$1.4 billion</strong> in daily trading volume around the listing, accounting for ~30% of all HIP-3 stock perpetual volume and setting a new record for the platform. Uniswap simultaneously added SpaceX (alongside Apple, Tesla, and NVIDIA) as tokenized securities on its web app, wallet, and API. $9.1 billion in RWA pool volume has been processed across 2.6 million transactions.</p>
+    <p class="insight">→ Why it matters: Crypto-native pre-IPO price discovery is now genuinely informing traditional finance before listing. The tokenized-equity thesis is no longer speculative infrastructure — it's processing real volume on real assets.</p>
+    <p class="source">Sources: TLDR Crypto · TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>Prediction markets: $586M Robinhood revenue projection, $5.1B Kalshi World Cup week</h3>
+    <p>Bernstein projects Robinhood's prediction market revenue will reach <strong>$586 million</strong> in 2026, up from $150 million in 2025 — a near-4× increase driven by World Cup volumes pulling retail participants into the asset class at scale. Kalshi recorded $5.1 billion in trading volume in the first week of the FIFA World Cup alone, a new all-time high. The analysis frames major sporting events as the primary on-ramp for mainstream adoption, extending prediction market reach beyond the crypto-native user base.</p>
+    <p class="insight">→ Why it matters: At $586M, prediction markets shift from speculative product line to core revenue segment. Traditional brokerages watching this dynamic will accelerate event-contract offerings ahead of potential US regulatory clarity.</p>
+    <p class="source">Source: TLDR Crypto [blurb only]</p>
+
+    <hr>
+
+    <h3>Vanguard deploys AI maturity model across 800+ product teams</h3>
+    <p>Vanguard shared details of a six-dimension AI maturity framework covering their entire product development lifecycle — not just engineering — including AI-powered delivery and team autonomy, implemented across 800+ product teams. The framework is explicit that AI integration requires structured organizational capability-building, not just tooling adoption.</p>
+    <p class="insight">→ Why it matters: When a $10T AUM asset manager rolls out a structured AI maturity model across 800+ teams, the enterprise deployment template has arrived. The "pilot to production" gap is now a governance and org-design problem.</p>
+    <p class="source">Source: TLDR Product Management [blurb only]</p>
+
+    <hr>
+
+    <h3>EUR stablecoins hit all-time high supply</h3>
+    <p>Token Terminal flagged EUR stablecoin supply at a new ATH, noting that major economies are unlikely to allow their currencies to be sidelined in an increasingly internet-native financial system. The growth is occurring in parallel with USD stablecoin dominance, not at its expense.</p>
+    <p class="insight">→ Why it matters: The digital-currency race is not winner-take-all — it is a proliferation. EUR stablecoin growth is a signal that the EU's regulatory posture on digital finance is hardening into infrastructure, not just policy.</p>
+    <p class="source">Source: TLDR Crypto [blurb only]</p>
+
+  </div>
+</div>
+
+<!-- DEV, DEVOPS & INFRA -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">⚙️</span>
+    <span class="card-title">Dev, DevOps &amp; Infra</span>
+  </div>
+  <div class="card-body">
+
+    <h3>ShinyHunters: Council of Europe and InfiniteCampus breaches</h3>
+    <p>ShinyHunters claims to have stolen <strong>429K files</strong> from the Council of Europe — Europe's leading human rights institution — including payroll data, CVs, bank account information, medical records, and performance evaluations. Separately, the same group stole and released data on 137K school staff accounts from a Salesforce instance belonging to EdTech company InfiniteCampus. The scale and breadth suggest the group has developed a scalable exfiltration playbook targeting HR-heavy datasets.</p>
+    <p class="warning">→ Targeting medical records and salary data is a shift toward data that carries GDPR/regulatory liability, not just reputational damage. European institutions should assume this campaign continues.</p>
+    <p class="source">Source: TLDR InfoSec [blurb only]</p>
+
+    <hr>
+
+    <h3>Chinese Velvet Ant APT maintained critical infrastructure access for 10 years</h3>
+    <p>Sygnia researchers found that the Velvet Ant Chinese APT maintained persistent access to a critical infrastructure network for a decade. The group breached an internet-facing server, set up a SOCKS5 proxy to reach air-gapped systems, and replaced legitimate tools including <code>pam_unix</code> and SSH utilities with trojanized versions. Recovery required a full rebuild — standard detection-and-remediate playbooks do not apply when attackers have replaced the OS-level authentication stack.</p>
+    <p class="insight">→ Why it matters: Ten-year persistence means the threat actor had complete visibility into everything that passed through the network. This is an operational intelligence collection operation, not a ransomware play.</p>
+    <p class="source">Source: TLDR InfoSec [blurb only]</p>
+
+    <hr>
+
+    <h3>AI demands more engineering discipline, not less — and senior engineers are paying the bill</h3>
+    <p>Two converging data points: first, a widely-shared analysis argues that as AI makes code generation fast and disposable, the discipline required to manage entire systems, ensure reliability, and maintain predictability actually increases — the shift is from obsessing over individual lines to managing systems. Second, SRE and DevOps engineers report losing up to <strong>a third of their week</strong> triaging and refactoring AI-generated code that looked correct in review but created runtime failures in production.</p>
+    <p class="insight">→ Why it matters: The "10× productivity" claim needs the asterisk — it presupposes proportional investment in review infrastructure, observability, and testing. Teams skipping that step are exporting cost to their senior engineers.</p>
+    <p class="source">Sources: TLDR Dev · TLDR IT [blurb only]</p>
+
+    <hr>
+
+    <h3>Dropbox: MCP + Dash closes the threat-model-to-code-review gap</h3>
+    <p>Dropbox built an agentic security review system: Dash indexes threat models; a review agent accesses them via MCP; a foundation model then compares each threat model against the corresponding pull request and surfaces gaps directly inside code review. No separate security review step — the signal lands where engineers already work.</p>
+    <p class="insight">→ Why it matters: This is the first credible production architecture for closing the threat-model-to-implementation gap at engineering velocity. Security teams should read this and adapt it.</p>
+    <p class="source">Source: TLDR Dev [blurb only]</p>
+
+    <hr>
+
+    <h3>Mozilla releases MDN MCP server</h3>
+    <p>Mozilla has released an experimental MCP server that gives AI tools (Claude, Cursor, etc.) direct access to up-to-date MDN documentation and browser compatibility data. Tests show more accurate browser support responses versus raw LLM inference, with faster response times.</p>
+    <p class="insight">→ Why it matters: MCP is becoming the standard plumbing for grounding AI tools in authoritative, living reference data. MDN is the obvious first mover; expect language specs, API references, and compliance databases to follow this pattern.</p>
+    <p class="source">Source: TLDR IT [blurb only]</p>
+
+    <hr>
+
+    <h3>Elastic open-sources LLM-based CI/CD workflow abuse detector</h3>
+    <p>Elastic Security Labs released a prototype tool that uses an LLM to detect suspicious changes in GitHub Actions, GitLab CI, and Azure DevOps workflow configurations. Designed to catch stolen-credential attacks that modify CI/CD pipelines to harvest secrets — the highest-leverage supply chain attack vector available to most threat actors.</p>
+    <p class="insight">→ Why it matters: LLM-based behavioral detection applied to CI/CD config changes is a practical, low-infrastructure way to catch a class of attack that SAST tools miss. Worth evaluating now.</p>
+    <p class="source">Source: TLDR IT [blurb only]</p>
+
+    <hr>
+
+    <h3>LinkedIn recruiter backdoor: likely North Korean pattern</h3>
+    <p>A developer was targeted via a fake LinkedIn recruiter who requested a "code review" for a malicious GitHub repository. A sandboxed investigation found a hidden backdoor executing remote payloads on dependency install. The attacker used stolen identities of a real journalist and software engineer to establish credibility. This matches documented Lazarus Group (North Korean) tactics.</p>
+    <p class="warning">→ Any unsolicited "code review a public repo" request from an unknown recruiter on LinkedIn warrants sandbox isolation. This is an active, ongoing pattern.</p>
+    <p class="source">Sources: TLDR Dev · TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>Chrome 151 drops Manifest V2: end of most major ad blockers</h3>
+    <p>A Chromium repository commit finalizes the removal of Manifest V2 extension support in Chrome 151. Most popular ad blockers (uBlock Origin MV2, etc.) will stop functioning. MV3 variants exist but have reduced capability due to API restrictions.</p>
+    <p class="insight">→ Why it matters: For enterprise security teams relying on browser extensions for content filtering, this is a configuration migration deadline. MV2-based enterprise tools need audit and replacement planning now.</p>
+    <p class="source">Source: TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>DDoSing software delivery pipelines via AI productivity</h3>
+    <p>A post from varoa.net argues that software delivery pipelines collapse when teams ignore bottlenecks and back-pressure — and that AI-driven productivity increases change volume faster than constrained verification systems (test suites, review gates, deployment pipelines) can absorb. The pipeline becomes the constraint, not the developer.</p>
+    <p class="insight">→ Why it matters: The throughput limit in AI-augmented engineering is no longer the human writing code — it is the downstream validation infrastructure. Teams need to invest in that layer proportionally.</p>
+    <p class="source">Source: TLDR IT [blurb only]</p>
+
+  </div>
+</div>
+
+<!-- OTHER -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🌐</span>
+    <span class="card-title">Other (Crypto &amp; General)</span>
+  </div>
+  <div class="card-body">
+
+    <h3>Second Circuit affirms SBF's conviction and 25-year sentence</h3>
+    <p>The Second Circuit upheld all seven fraud and conspiracy counts against Sam Bankman-Fried and confirmed his 25-year sentence. The ruling eliminates the most direct path to overturning the 2023 verdict. The remaining avenue — a Supreme Court petition — carries roughly 1-2% acceptance odds.</p>
+    <p class="insight">→ Why it matters: Regulatory closure on the FTX case removes a major source of uncertainty for institutional crypto adoption, though credibility questions will persist independently of legal outcomes.</p>
+    <p class="source">Source: TLDR Crypto [blurb only]</p>
+
+    <hr>
+
+    <h3>Aztec Connect deprecated smart contract exploited for $2.1M</h3>
+    <p>A June 15 exploit drained $2.1 million from Aztec Connect, a DeFi protocol deprecated in March 2023 whose immutable contracts continued holding user assets. BlockSec attributed the breach to a ZK proof verification mismatch where the verification system and Ethereum settlement logic interpreted the same transaction list differently, allowing the attacker to generate unbacked balances. Aztec Labs holds no admin keys and cannot remediate.</p>
+    <p class="insight">→ Why it matters: Deprecated-but-live immutable contracts holding user assets remain an unresolved structural risk in DeFi. The correct defense — emptying or migrating deprecated contracts — is apparently not being followed at scale.</p>
+    <p class="source">Source: TLDR Crypto [blurb only]</p>
+
+    <hr>
+
+    <h3>Humanity Protocol: $36M lost in a single phishing email</h3>
+    <p>A phishing email impersonating Korean exchange Bithumb delivered remote-access malware to a director's Windows machine, extracting private keys that controlled on-chain operations. The attacker simultaneously replaced a Hyperlane warp-route proxy on Ethereum and seized ProxyAdmin ownership on BSC, minting 100 million additional $H tokens. Proceeds were liquidated over eight hours, crashing $H by <strong>89%</strong> and generating at least $21M in confirmed ETH proceeds.</p>
+    <p class="insight">→ Why it matters: No smart contract audit mitigates a keyholder opening a zip file on a personal device. Hardware security modules, multisig with geographically separated signers, and key isolation from internet-connected endpoints are the only defenses.</p>
+    <p class="source">Source: TLDR InfoSec [blurb only]</p>
+
+    <hr>
+
+    <h3>UK bans under-16s from TikTok, YouTube, and other social platforms</h3>
+    <p>The UK ban covers major social media platforms and is expected to take effect early next year. If enforcement is meaningful, this is the first major Western regulatory age-gate for social platforms at scale.</p>
+    <p class="insight">→ Why it matters: Watch for EU and US regulators using this as a template. Platform companies will face implementation cost and friction regardless of eventual enforceability.</p>
+    <p class="source">Source: TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>Brain-computer interface enables independent communication for ALS patient</h3>
+    <p>UC Davis developed a BCI using an advanced neural decoding algorithm that enables a person with severe ALS to communicate, work, and interact with a personal computer independently. The device translates neural signals into text and cursor control without speech or motor function.</p>
+    <p class="insight">→ Why it matters: Practical, independently validated BCI for communication is moving from lab demonstration to assistive-technology deployment. A quiet but significant milestone.</p>
+    <p class="source">Source: TLDR Standard [blurb only]</p>
+
+    <hr>
+
+    <h3>The web is migrating from human-readable to machine-readable infrastructure</h3>
+    <p>A long-form analysis argues that the web is shifting from search engines and clickable pages toward AI chat interfaces. Websites are increasingly becoming data infrastructure for machines rather than destinations for humans. "The web will likely still exist in the future, but it may no longer be where people go."</p>
+    <p class="insight">→ Why it matters: If AI chat interfaces capture the discovery and reading layer, SEO-driven content strategies and publishing models face structural disruption — not gradual erosion.</p>
+    <p class="source">Source: TLDR Standard [blurb only]</p>
+
+  </div>
+</div>
+
+<!-- ANALYST TAKE -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🎯</span>
+    <span class="card-title">Analyst Take</span>
+  </div>
+  <div class="card-body">
+    <ul>
+      <li><strong>The Fable/Mythos government action is the defining event of the week — possibly the year.</strong> A government restricting access to a commercial AI model because it is too capable at finding and exploiting security vulnerabilities is the inflection point AI governance has been converging toward. It makes the safety-as-moat thesis concrete, elevates the open-model/post-training conversation from cost optimisation to risk management, and sets a precedent that every AI lab with frontier models now has to price into its access and deployment strategy.</li>
+      <li><strong>The AI code quality crisis is real and accelerating.</strong> The Faros AI data — 861% churn, 9%→54% defect rate, senior engineers losing a third of their week — is a coherent, multi-source picture. The teams pulling ahead are those investing proportionally in review infrastructure, eval pipelines, and agent governance alongside generation capability. Teams that only invest in the generation side are exporting cost to their most expensive engineers.</li>
+      <li><strong>AI agents are running ahead of accountability infrastructure.</strong> The 43-point gap between claimed and real agent ownership (85% vs. 42%), combined with AI already autonomously patching and restarting production services (and hallucinating while doing so), is a governance debt accruing at enterprise scale. The market response — Omada Agent Governance, LiteLLM patching, new identity security platforms — confirms this is a productizable problem that organizations cannot solve with existing IAM tooling.</li>
+      <li><strong>Crypto is integrating into financial infrastructure faster than the "crypto vs. TradFi" framing suggests.</strong> SpaceX tokenized equities on Uniswap, SpaceX IPO perp price discovery cited by traditional finance, Robinhood at $586M prediction market revenue, EUR stablecoins at ATH — these are stories about blockchain rails becoming the operational layer of conventional finance. The "Crypto 2029" thesis (tokens require enforceable claims on real assets; infrastructure becomes invisible) appears to be tracking ahead of schedule.</li>
+      <li><strong>Two simultaneous active-exploitation CVEs in enterprise perimeter infrastructure is the security posture test of the week.</strong> Palo Alto + Ivanti being exploited concurrently means security teams are triaging two high-priority patching campaigns simultaneously. Ivanti Sentry is the higher urgency signal — CISA's 3-day federal remediation deadline is the proxy for how seriously to treat it.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- WATCH / ACTION -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">📌</span>
+    <span class="card-title">Watch / Action</span>
+  </div>
+  <div class="card-body">
+    <ul>
+      <li><strong>Immediately:</strong> Patch Ivanti Sentry (CVE-2026-10520) and Palo Alto GlobalProtect (CVE-2026-0257). If you run LiteLLM proxy in any environment, upgrade to <code>v1.83.14-stable</code> and rotate all AI provider credentials.</li>
+      <li><strong>This week:</strong> Confirm CVE-2026-42824 (M365 Copilot SearchLeak) patch is deployed in your Microsoft 365 tenant. Audit your CI/CD workflow change detection — Elastic's open-source tool is worth evaluating as an addition to your GitHub Actions security posture.</li>
+      <li><strong>Developer awareness:</strong> Distribute the LinkedIn recruiter backdoor pattern to engineering teams. The "review a public GitHub repo" social engineering vector is active and uses credible stolen identities.</li>
+      <li><strong>Strategic:</strong> If your core product runs on a single closed-model provider (Anthropic, OpenAI, or others), the Fable/Mythos situation is the forcing function to document and test your multi-provider or post-trained fallback strategy. This is now a business continuity risk, not a cost consideration.</li>
+      <li><strong>Chrome 151:</strong> Audit enterprise browser security tooling that depends on Manifest V2 extensions. Plan migration before Chrome 151 ships.</li>
+      <li><strong>Watch:</strong> Whether Anthropic makes any official statement on Fable/Mythos availability timeline. "The Once and Future Fable #2" implies uncertainty about whether restrictions are temporary — monitoring official channels is warranted.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SOURCE LIST -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">📋</span>
+    <span class="card-title">Source List</span>
+  </div>
+  <div class="card-body">
+
+    <div class="source-group">
+      <h4>Headlines</h4>
+      <div class="source-item">The Once and Future Fable #2 — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">The Window Has Closed — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Anthropic's Safety Superpower — <a href="https://stratechery.com/2026/anthropics-safety-superpower">stratechery.com</a> · TLDR Standard · TLDR Dev · TLDR InfoSec · TLDR Product Management <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Fox to Buy Roku Streaming Service in $25 Billion Deal — TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Palo Alto Warns GlobalProtect VPN Flaw Is Being Actively Exploited — <a href="https://gbhackers.com/palo-alto-warns-globalprotect-vpn-flaw/">gbhackers.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Ivanti Sentry Flaw Is Actively Exploited In The Wild — TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+    </div>
+
+    <div class="source-group">
+      <h4>AI &amp; Research</h4>
+      <div class="source-item">Factory 2.0: From Coding Agents to Software Factories — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Agentic Code Review — TLDR AI · TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Sakana Marlin — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Facebook Gets Its Own AI Mode — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Google DeepMind Explores the Path to ASI — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">LiteLLM Vulnerability Chain Lets Low-Privilege Users Take Over AI Gateway Servers — TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">SearchLeak: How We Turned M365 Copilot Into a One-Click Data Exfiltration Weapon — TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">AI Hallucinations Are Already Affecting IT Operations — <a href="https://www.helpnetsecurity.com/2026/06/05/ai-hallucinations-it-operations-research/">helpnetsecurity.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">AI Agent Governance Gap Is Becoming An IT Problem — <a href="https://venturebeat.com/security/85-of-it-teams-claim-every-ai-agent-is-under-control-only-42-actually-know-who-owns-them/">venturebeat.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Stop Monitoring AI Systems Like Web Services — <a href="https://www.newsletter.swirlai.com/p/stop-monitoring-ai-systems-like-web">newsletter.swirlai.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+    </div>
+
+    <div class="source-group">
+      <h4>Business, Founders &amp; Strategy</h4>
+      <div class="source-item">Owning vs. Renting Intelligence — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Should You Post-Train Your Own Model? — TLDR AI <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">SpaceX IPO Sparks $1.4 Billion Trading Frenzy on Hyperliquid — TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Tokenized Assets Live on Uniswap — TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Robinhood Could See Strong Tailwinds as World Cup Drives Record Prediction Market Volumes — TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Kalshi World Cup Opening Week Trading Volume Hits Record $5.1 Billion — TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">How Vanguard Is Embedding AI Across the Product Lifecycle — <a href="https://newsletter.getdx.com/p/augmented-accelerated-autonomized">newsletter.getdx.com</a> · TLDR Product Management <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">EUR Stablecoins Hit All-Time High — TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+    </div>
+
+    <div class="source-group">
+      <h4>Dev, DevOps &amp; Infra</h4>
+      <div class="source-item">ShinyHunters Claim Council of Europe Hack — TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">InfiniteCampus Data Breach Affects 137K School Staff Accounts — TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Chinese Hackers Hijacked Auth Flow, Spy on Isolated Network for a Decade — TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">AI Demands More Engineering Discipline. Not Less — TLDR Dev <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Senior Engineers Are Spending More Time Cleaning Up AI-Generated Code — <a href="https://www.helpnetsecurity.com/2026/06/15/ai-generated-code-review-issues/">helpnetsecurity.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">How Dropbox Uses MCP and Dash to Close the Design-to-Code Security Gap — TLDR Dev <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Introducing the MDN MCP Server — <a href="https://developer.mozilla.org/en-US/blog/introducing-mdn-mcp-server/">developer.mozilla.org</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Open-Source CI/CD Abuse Detector Flags Malicious Workflow Changes — <a href="https://www.helpnetsecurity.com/2026/06/15/ci-cd-abuse-detector-open-source/">helpnetsecurity.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">A Backdoor in a LinkedIn Job Offer — TLDR Dev · TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Google Chrome's Next Update Will Mark the End of Popular Ad Blockers — TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">DDoSing Software Delivery Pipelines — <a href="https://varoa.net/2026/06/13/ddosing-software-delivery-pipelines.html">varoa.net</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Omada Launches Agent Governance — <a href="https://www.helpnetsecurity.com/2026/06/15/omada-agent-governance/">helpnetsecurity.com</a> · TLDR IT <span class="blurb-tag">[blurb only]</span></div>
+    </div>
+
+    <div class="source-group">
+      <h4>Other (Crypto &amp; General)</h4>
+      <div class="source-item">Second Circuit Affirms SBF's Fraud Conviction and 25-Year Sentence — <a href="https://thedefiant.io/news/regulation/second-circuit-affirms-sbf-fraud-conviction-25-year-sentence">thedefiant.io</a> · TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Aztec Connect's Abandoned Smart Contract Exploited for $2.1M — <a href="https://cointelegraph.com/news/aztec-connects-depreciated-smart-contract-exploited-for-2-million">cointelegraph.com</a> · TLDR Crypto <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Humanity Protocol H Token Compromise: One Email, $36M Lost, 89% Crash — TLDR InfoSec <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">UK Bans Under-16s From Social Media — TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">Brain-Computer Interface Enables Independent Communication for Man with ALS — TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+      <div class="source-item">The Web We Know Is Going to Disappear — TLDR Standard <span class="blurb-tag">[blurb only]</span></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  Generated from TLDR newsletters (2026-06-16) &nbsp;·&nbsp; Monday, 16 June 2026
+</div>
+
 </body>
 </html>
