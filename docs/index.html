@@ -2,22 +2,372 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
-<title>Daily Briefing</title>
+<title>Daily Briefing — Wednesday, 24 June 2026</title>
 <style>
+  :root {
+    --bg:       #0a0a0a;
+    --surface:  #141414;
+    --border:   #232323;
+    --text:     #e8e8e8;
+    --muted:    #888;
+    --accent:   #f0a500;
+    --insight:  #1a3a2a;
+    --insight-t:#4ade80;
+    --source:   #2a2a2a;
+    --radius:   10px;
+    --font:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --mono:     'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { background: #0a0a0a; color: #e8e8e8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-  body { max-width: 680px; margin: 0 auto; padding: 48px 16px; text-align: center; }
-  .mono { font-family: 'SF Mono', 'Fira Code', monospace; }
-  .label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #f0a500; margin-bottom: 16px; }
-  h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
-  p { font-size: 14px; color: #888; line-height: 1.6; }
+  html { background: var(--bg); color: var(--text); font-family: var(--font); }
+  body { max-width: 680px; margin: 0 auto; padding: 16px 16px env(safe-area-inset-bottom); }
+
+  .header { padding: 28px 0 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .header-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  .header-title { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .header-sub { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .header-note { font-size: 12px; color: #666; margin-top: 8px; font-style: italic; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
+  .card-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px 12px; border-bottom: 1px solid var(--border); }
+  .card-emoji { font-size: 18px; line-height: 1; }
+  .card-title { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .card-body { padding: 14px 16px 16px; }
+
+  .card-body p { font-size: 14px; line-height: 1.65; color: var(--text); margin-bottom: 10px; }
+  .card-body p:last-child { margin-bottom: 0; }
+  .card-body h3.item-title { font-size: 15px; font-weight: 700; color: var(--text); margin: 18px 0 6px; line-height: 1.35; }
+  .card-body h3.item-title:first-child { margin-top: 0; }
+  .card-body h4.item-sub { font-size: 13px; font-weight: 600; color: var(--muted); margin: 12px 0 4px; }
+  .card-body ul, .card-body ol { padding-left: 20px; margin-bottom: 10px; }
+  .card-body li { font-size: 14px; line-height: 1.6; margin-bottom: 4px; }
+  .card-body hr.item-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .card-body code { font-family: var(--mono); font-size: 12px; background: #1e1e1e; padding: 1px 5px; border-radius: 3px; }
+  .card-body strong { color: #fff; font-weight: 600; }
+  .card-body em { color: #ccc; font-style: italic; }
+  .card-body a { color: var(--accent); text-decoration: none; }
+  .card-body a:hover { text-decoration: underline; }
+
+  p.insight { background: var(--insight); border-left: 3px solid var(--insight-t); border-radius: 0 6px 6px 0; padding: 8px 12px; color: var(--insight-t); font-size: 13px; margin: 8px 0 10px; }
+  p.source { font-family: var(--mono); font-size: 11px; color: var(--muted); background: var(--source); border-radius: 4px; padding: 4px 8px; margin-top: 4px; }
+  p.tag { font-family: var(--mono); font-size: 10px; color: #666; margin-top: 2px; }
+
+  .source-list { list-style: none; padding: 0; }
+  .source-list li { font-size: 13px; line-height: 1.5; padding: 6px 0; border-bottom: 1px solid #1a1a1a; }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list a { color: var(--accent); text-decoration: none; word-break: break-all; }
+  .source-list a:hover { text-decoration: underline; }
+  .source-num { font-family: var(--mono); font-size: 10px; color: #555; margin-right: 6px; }
+
+  .footer { text-align: center; padding: 20px 0 28px; font-family: var(--mono); font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 8px; }
 </style>
 </head>
 <body>
-  <div class="label mono">Intelligence Briefing</div>
-  <h1>Awaiting first run.</h1>
-  <p>The GitHub Action hasn't run yet.<br>Trigger it manually via <strong>Actions → Daily Briefing → Run workflow</strong>.</p>
+
+<div class="header">
+  <div class="header-eyebrow">Intelligence Briefing</div>
+  <div class="header-title">Good morning, Stephan.</div>
+  <div class="header-sub">Wednesday, 24 June 2026 &nbsp;·&nbsp; 8 TLDR newsletters &nbsp;·&nbsp; 31 sources</div>
+  <div class="header-note">June 25 editions not yet delivered at run time — using June 24.</div>
+</div>
+
+<!-- HEADLINES -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🗞</span>
+    <span class="card-title">Headlines</span>
+  </div>
+  <div class="card-body">
+
+    <h3 class="item-title">US export controls cut NSA access to Anthropic's Mythos vulnerability scanner</h3>
+    <p>The NSA lost operational access to Anthropic's Mythos AI-powered security tool after the US government tightened export-control classification around advanced AI models. Mythos had been used for automated vulnerability research; it now falls under restrictions that prevent certain federal deployments. A separate community benchmarking effort found that no current open model consistently matches Mythos on confirmed vulnerabilities — meaning the restriction forecloses a capability with no near-term substitute in the public sector.</p>
+    <p class="insight">The structural contradiction: the tool the US security apparatus most needs to defend critical infrastructure may be legally unavailable to it — while adversaries face no equivalent restriction.</p>
+    <p class="source">Sources: TLDR InfoSec, TLDR Dev · The Guardian, Jun 22 · swelljoe.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Reflection AI locks in <strong>$6.3B</strong> SpaceX compute; Micron takes Anthropic Series H stake</h3>
+    <p>Reflection AI signed a deal to lease Nvidia GB300 GPU capacity from SpaceX's Colossus 2 supercomputer for up to $6.3bn — the largest single compute procurement disclosed by a frontier AI lab. Separately, Micron struck a multi-year memory supply agreement with Anthropic, provisioning storage for Claude data centres and jointly co-designing memory architecture for AI workloads. Micron also takes an equity stake in Anthropic's Series H round.</p>
+    <p class="insight">Frontier labs are locking in dedicated infrastructure and cross-sector strategic investors before anticipated demand cliffs, executing a clean break from hyperscaler dependency.</p>
+    <p class="source">Sources: TLDR IT, TLDR AI · TechCrunch Jun 22 · Micron IR Jun 24</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">OpenAI Daybreak: GPT-5.5-Cyber released to defenders, Codex Security plugin ships</h3>
+    <p>OpenAI's "Daybreak" security programme moves to GA: GPT-5.5-Cyber is now available to security teams, and the Codex Security plugin ships for automated vulnerability discovery and patch generation. The "Patch the Planet" initiative positions OpenAI as a security partner for enterprises. The rollout arrived on the same day Five Eyes intelligence agencies issued a joint warning about adversaries integrating AI into offensive cyber operations — suggesting coordinated timing between government and vendor security disclosures.</p>
+    <p class="insight">Offence is ahead of defence; the policy apparatus and the vendor response are still catching up to adversarial capability.</p>
+    <p class="source">Sources: TLDR Dev, TLDR InfoSec · Jun 24</p>
+
+  </div>
+</div>
+
+<!-- AI & RESEARCH -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🧠</span>
+    <span class="card-title">AI &amp; Research</span>
+  </div>
+  <div class="card-body">
+
+    <h3 class="item-title">Claude Tag: Anthropic deploys Claude as a Slack agent</h3>
+    <p>Anthropic launched Claude Tag in beta for Enterprise and Team subscribers. Users mention Claude in any Slack channel; it monitors activity, takes action on flagged items, retains channel context, and connects to external tools and codebases. It replaces the existing Claude Slack app. The launch extends Anthropic's reach into agentic collaboration layers rather than raw API access.</p>
+    <p class="tag">Sources: TLDR AI, TLDR Founders, TLDR Dev, TLDR standard [4 newsletters — deduped]</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">ByteDance Seedance 2.5 video model released</h3>
+    <p>ByteDance released Seedance 2.5, its latest video generation model, with benchmark results claiming state-of-the-art performance. The release extends Chinese foundation-model competition from text into video generation.</p>
+    <p class="source">Source: TLDR AI · CNET</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Mistral OCR 4: bounding boxes, block classification, inline confidence scores</h3>
+    <p>Mistral released OCR 4 with granular output including bounding boxes and per-element confidence scoring. Performance exceeds previous state-of-the-art systems. The model is compact enough for self-hosted deployment — relevant for enterprises needing on-premise document processing without cloud dependencies.</p>
+    <p class="source">Source: TLDR AI, TLDR Dev · mistral.ai</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">OpenAI Bidi: full-duplex voice mode in preparation for ChatGPT</h3>
+    <p>OpenAI is preparing a bidirectional voice mode for ChatGPT, enabling the model to speak and listen simultaneously rather than push-to-talk. The feature would substantially expand the voice interface's practical use in ambient and hands-free contexts.</p>
+    <p class="source">Source: TLDR AI · testingcatalog.com [blurb only]</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Prompt injection via role confusion: <strong>61% jailbreak rate</strong> before fix</h3>
+    <p>Researchers at Gray Swan and Simon Willison independently documented a prompt injection class that works by disrupting a model's role identity — causing it to follow injected instructions rather than the user's. Pre-fix success rate was 61% across several major models. Anthropic and others applied "destyling" countermeasures. The vector is relevant for any pipeline that ingests external data (documents, emails, web content) and passes it to an agent with tool access.</p>
+    <p class="source">Sources: TLDR InfoSec, TLDR AI · simonwillison.net, role-confusion.github.io · Jun 22</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Post-training evals: Fable 5 leads on agentic tasks</h3>
+    <p>Thoughtful Lab's evaluation of frontier models on FrogsGame — a reinforcement-learning post-training benchmark — placed Claude Fable 5 first, ahead of Opus 4.8 and GPT-5.5. Fable 5 produced higher-quality training traces and more accurate self-evaluation. The result suggests Anthropic's RL-based post-training advantage does not fully surface in standard capability benchmarks.</p>
+    <p class="source">Source: TLDR Dev · thoughtfullab.com</p>
+
+  </div>
+</div>
+
+<!-- BUSINESS / FOUNDERS & STRATEGY -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">📈</span>
+    <span class="card-title">Business / Founders &amp; Strategy</span>
+  </div>
+  <div class="card-body">
+
+    <h3 class="item-title">Inference is a zero-margin trap — unless you escape cost-plus pricing</h3>
+    <p>Tom Tunguz argues that selling raw inference at cost-plus pricing is structurally self-defeating: margins erode as GPU prices fall and competitors undercut. Exit routes are value-based pricing (charging on outcomes) and technical differentiation via model routing, caching, and distillation. The analysis applies to any enterprise AI product team currently justifying token costs on a per-query basis.</p>
+    <p class="source">Source: TLDR Founders · tomtunguz.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Polsia: <strong>$10M ARR</strong> with AI agents as sole workforce</h3>
+    <p>Polsia claims $10M ARR operating with AI agents in place of employees, joining a cohort of YC-backed startups exploring fully AI-staffed business models. The economics resemble Shopify: most such ventures fail, but a small percentage succeeds at disproportionate scale. The model is still unproven at enterprise complexity, but the revenue figure is material enough to be taken seriously.</p>
+    <p class="source">Source: TLDR Founders · mondaymorning.substack.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">How Cursor captured VS Code users without asking them to switch</h3>
+    <p>Cursor forked VS Code wholesale, preserving every user extension and keyboard shortcut, then rebuilt the AI layer underneath. Microsoft cannot replicate this without destabilising its extension ecosystem, creating a durable counter-positioning moat. The lesson: absorb the switching cost rather than eliminating it.</p>
+    <p class="source">Source: TLDR Founders · the-diff.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">AI agent churn is arriving for vague "superagent" products</h3>
+    <p>Analysis in the founder community: AI agent products that promised broad superagent capabilities are seeing early churn as reliability gaps emerge in production. Products with narrow, extensively tested use cases retain customers; those producing AI slop in poorly scoped domains are losing them. The lesson is old: scope before scope creep.</p>
+    <p class="source">Source: TLDR Founders · tremendous.blog</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Meta's Arena: a prediction market app without real money — for now</h3>
+    <p>Mark Zuckerberg dispatched a small team to build Arena, an internal Polymarket/Kalshi analogue using a points system. Meta has not ruled out real-money markets; the points framing likely reflects regulatory caution rather than product intention. The effort is consistent with Meta's broader push into new social formats.</p>
+    <p class="source">Source: TLDR standard · tracking link (TLDR)</p>
+
+  </div>
+</div>
+
+<!-- DEV / DEVOPS & INFRA -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">⚙️</span>
+    <span class="card-title">Dev / DevOps &amp; Infra</span>
+  </div>
+  <div class="card-body">
+
+    <h3 class="item-title">AWS Lambda MicroVMs now GA</h3>
+    <p>Lambda MicroVMs provide VM-level isolation with fast startup and stateful sessions, targeting AI coding assistants, agent sandboxes, and untrusted-code execution pipelines. The VM suspends when idle, resumes on traffic, and supports automated vertical scaling. Now generally available after preview.</p>
+    <p class="source">Sources: TLDR Founders, TLDR DevOps · theburningmonk.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Cisco Unified CM SSRF flaw CVE-2026-20230 actively exploited</h3>
+    <p>A high-severity SSRF vulnerability in Cisco Unified Communications Manager, patched earlier in June, is now under active exploitation. File-write attempts against vulnerable systems have been observed; successful exploitation can reach root-level access. Treat as a priority patch for any organisation running Cisco UCM on-premises.</p>
+    <p class="source">Sources: TLDR IT, TLDR DevOps · Cisco PSIRT [tracking link]</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">OpenClaw: malicious agent skill files discovered in the wild</h3>
+    <p>Unit 42 documented OpenClaw, a threat actor embedding malicious skill files into open AI agent ecosystems. The vector mirrors package-manager supply chain poisoning: a trusted agent loads a malicious skill file from an unvetted source, enabling code execution or data exfiltration. Enterprises deploying agents with third-party skills, MCP tools, or plugin marketplaces should audit provenance immediately.</p>
+    <p class="source">Source: TLDR InfoSec · unit42.paloaltonetworks.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Five Eyes: joint warning on AI-enabled cyberattacks against critical infrastructure</h3>
+    <p>Intelligence agencies from Five Eyes member states issued a joint advisory warning that adversaries are actively integrating AI into offensive cyber operations, specifically targeting critical infrastructure. Published concurrently with OpenAI Daybreak, the advisory reinforces that the offensive AI integration is not hypothetical.</p>
+    <p class="source">Source: TLDR InfoSec · Five Eyes joint advisory [tracking link]</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">GitHub Actions: actions/checkout updated to block pwn-request attacks</h3>
+    <p>GitHub shipped an update to the <code>actions/checkout</code> action that blocks a known class of pwn-request attacks where a malicious PR can exfiltrate CI secrets via the runner. Any workflow relying on <code>actions/checkout</code> should pin to the latest version.</p>
+    <p class="source">Source: TLDR InfoSec · thehackernews.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Meta suspended internal AI pipeline after keystroke-level employee data leaked</h3>
+    <p>Business Insider reported that Meta paused deployment of an internal AI training data pipeline after it was found to capture fine-grained employee activity — including keystroke patterns — across internal systems. The incident raises governance questions for enterprises deploying AI tooling with broad system-level access permissions.</p>
+    <p class="source">Source: TLDR InfoSec · Business Insider Jun 24</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Tata Electronics breach: 200K files leaked including Apple/Tesla supply data</h3>
+    <p>The World Leaks ransomware group published over 200K files from Tata Electronics, reportedly including materials from supply relationships with Apple and Tesla. The incident is a textbook third-party supply chain exposure for large OEMs — the direct targets are not Tata's own customers but the brands whose components it manufactures.</p>
+    <p class="source">Source: TLDR InfoSec · tracking link (TLDR)</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">FFmpeg PixelSmash RCE: patch required for applications without ASLR</h3>
+    <p>JFrog researchers disclosed a vulnerability in FFmpeg enabling remote code execution in applications running without ASLR, or denial of service in others. Any application embedding FFmpeg for media processing — including AI-augmented video/audio pipelines — should patch. The attack surface is broad given FFmpeg's ubiquity.</p>
+    <p class="source">Source: TLDR InfoSec · tracking link (TLDR)</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Cloudflare PACT: privacy-first bot-detection protocol</h3>
+    <p>Cloudflare, in collaboration with major browser vendors, announced PACT (Privacy-Preserving Anti-Bot Challenge Technology). The protocol provides bot detection without exposing user identity to the server or the challenge issuer, resolving the classic tension between fraud prevention and user privacy. A standards-track proposal is expected.</p>
+    <p class="source">Source: TLDR InfoSec · cloudflare.com press release</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">n8n releases 2026 AI Agent Builder Report</h3>
+    <p>n8n published its enterprise evaluation of workflow-based AI agent development tools, focused on security controls and enterprise readiness. Relevant for teams assessing agentic orchestration platforms (n8n, LangGraph, CrewAI et al.) for production deployments.</p>
+    <p class="source">Source: TLDR IT · n8n.io</p>
+
+  </div>
+</div>
+
+<!-- OTHER: CRYPTO & GENERAL -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🌐</span>
+    <span class="card-title">Other: Crypto &amp; General</span>
+  </div>
+  <div class="card-body">
+
+    <h3 class="item-title">US Senate passes <strong>4-year CBDC ban</strong> embedded in housing bill</h3>
+    <p>The 21st Century ROAD to Housing Act passed 85-5 with a rider prohibiting the Federal Reserve from issuing or creating a retail CBDC for four years. There is no active Fed CBDC project to block — Republican lawmakers framed the provision as a symbolic anti-surveillance measure. The bill moves to the House and is expected to become law.</p>
+    <p class="source">Source: TLDR Crypto · tracking link (TLDR)</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Goldfinch winds down after <strong>$100M</strong> in loans; depositors face 2+ year wait</h3>
+    <p>Warbler Labs placed Goldfinch Prime into maintenance mode after serial defaults on emerging-market loans eroded depositor capital. GFI is <strong>99.8% below</strong> its January 2022 peak. Depositors face a two-year-plus recovery horizon. The failure follows a now-established pattern: undercollateralised on-chain credit to emerging markets collapses when off-chain legal enforcement proves inadequate.</p>
+    <p class="source">Source: TLDR Crypto · cryptopolitan.com</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">Secret Network Axelar bridge drained <strong>$4.67M</strong> via infinite-mint flaw</h3>
+    <p>An attacker exploited a years-old infinite-mint vulnerability in Secret Network's CW20-ICS20 bridge contract, draining $4.67M across seven wrapped-token assets over seven days between June 10 and June 17. The exploit ran undetected — indicating a gap in on-chain monitoring for bridge liquidity. Secret Network suspended the Axelar bridge.</p>
+    <p class="source">Source: TLDR Crypto · thedefiant.io</p>
+
+    <hr class="item-divider">
+
+    <h3 class="item-title">SpaceX Starfall: point-to-point orbital cargo pod launched</h3>
+    <p>A SpaceX Falcon 9 launched Starfall, a saucer-shaped reentry pod designed for point-to-point cargo delivery through space. FAA documentation describes it as enabling rapid delivery of critical cargo and access for commercial in-space manufacturing. The vehicle is cargo-only and smaller than Crew Dragon.</p>
+    <p class="source">Source: TLDR standard · arstechnica.com</p>
+
+  </div>
+</div>
+
+<!-- ANALYST TAKE -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🔭</span>
+    <span class="card-title">Analyst Take</span>
+  </div>
+  <div class="card-body">
+    <ul>
+      <li><strong>Anthropic is vertically integrating.</strong> Series H with Micron as equity investor, a dedicated memory supply agreement, Claude Tag for enterprise Slack, and Mythos for government security work — Anthropic is building relationships across the stack that reduce dependence on OpenAI-adjacent hyperscalers and position Claude as embedded infrastructure rather than a commodity API.</li>
+      <li><strong>Hyperscalers are losing the compute narrative.</strong> Both the Reflection AI/SpaceX deal and Anthropic's Micron agreement show that frontier labs now have sufficient market power to lock up dedicated infrastructure outside AWS, Azure, and GCP. Revenue growth assumptions for the three major cloud providers should be stress-tested against this trend.</li>
+      <li><strong>AI security is bifurcating — offence is ahead.</strong> OpenAI Daybreak and the Five Eyes warning landed on the same day; the timing was not coincidental. Adversaries are already integrating AI into offensive operations. The enterprise security apparatus is still in procurement debates. The gap between offensive AI capability and defensive AI tooling is widening.</li>
+      <li><strong>Agentic supply chain attacks are the next primary vector.</strong> OpenClaw (malicious agent skills), GitHub Actions pwn requests, and the LastPass Klue incident all appeared in the same news cycle. The pattern is consistent: as AI agents receive broader system permissions, the supply chain of skills, plugins, and tools they ingest becomes a primary attack surface. Audit everything that has write permissions.</li>
+      <li><strong>The RWA credit thesis is failing structurally.</strong> MainStreet Finance, Alturax, and now Goldfinch — undercollateralised on-chain lending to emerging markets collapses when defaults exceed off-chain enforcement capacity. The Goldfinch analysis in TLDR Crypto proposes a composite standard: proof of solvency plus legal-claim attestation, not just proof of reserves. Until that standard exists, the category warrants scepticism.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- WATCH / ACTION -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">📌</span>
+    <span class="card-title">Watch / Action</span>
+  </div>
+  <div class="card-body">
+    <ul>
+      <li><strong>Patch immediately:</strong> Cisco Unified CM (CVE-2026-20230) and FFmpeg (PixelSmash RCE). Both are actively exploited or have weaponisable PoC in the wild.</li>
+      <li><strong>Audit CI pipelines:</strong> Update <code>actions/checkout</code> to the latest version. Review any third-party agent skills or MCP tools in your deployments for OpenClaw-type provenance issues.</li>
+      <li><strong>Watch the NSA–Anthropic export control situation:</strong> The Guardian article suggests classification of AI models under export law remains unsettled. Government AI procurement strategies may shift depending on whether security-focused models get carved out of ITAR/EAR scope.</li>
+      <li><strong>Evaluate Lambda MicroVMs:</strong> Now GA — if you run AI coding assistants or agent sandboxes, MicroVMs offer materially better isolation than Lambda's standard execution environment with comparable cold-start overhead.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SOURCE LIST -->
+<div class="card">
+  <div class="card-header">
+    <span class="card-emoji">🔗</span>
+    <span class="card-title">Source List</span>
+  </div>
+  <div class="card-body">
+    <ul class="source-list">
+      <li><span class="source-num">01</span> <a href="https://www.anthropic.com/news/introducing-claude-tag" target="_blank" rel="noopener">Introducing Claude Tag — anthropic.com</a></li>
+      <li><span class="source-num">02</span> <a href="https://www.cnet.com/tech/services-and-software/bytedance-introduces-new-seedance-2-5-video-model/" target="_blank" rel="noopener">ByteDance Introduces Seedance 2.5 — CNET</a></li>
+      <li><span class="source-num">03</span> <a href="https://mistral.ai/news/ocr-4/" target="_blank" rel="noopener">Mistral OCR 4: SOTA OCR for Document Intelligence — mistral.ai</a></li>
+      <li><span class="source-num">04</span> <a href="https://simonwillison.net/2026/Jun/22/prompt-injection-as-role-confusion/" target="_blank" rel="noopener">Prompt Injection as Role Confusion — Simon Willison</a></li>
+      <li><span class="source-num">05</span> <a href="https://role-confusion.github.io/" target="_blank" rel="noopener">Role Confusion Research — role-confusion.github.io</a></li>
+      <li><span class="source-num">06</span> <a href="https://www.testingcatalog.com/openai-prepares-bidirectional-voice-mode-for-rollout-on-chatgpt/" target="_blank" rel="noopener">OpenAI Prepares Bidirectional Voice Mode — testingcatalog.com</a></li>
+      <li><span class="source-num">07</span> <a href="https://thoughtfullab.com/the-state-of-ai-post-training-agents.html" target="_blank" rel="noopener">The State of AI Post-Training Agents (Fable 5 evals) — thoughtfullab.com</a></li>
+      <li><span class="source-num">08</span> <a href="https://tomtunguz.com/so-you-want-to-sell-inference/" target="_blank" rel="noopener">So You Want to Sell Inference — Tom Tunguz</a></li>
+      <li><span class="source-num">09</span> <a href="https://mondaymorning.substack.com/p/companies-that-build-companies" target="_blank" rel="noopener">Companies That Build Companies (Polsia, $10M ARR) — Monday Morning</a></li>
+      <li><span class="source-num">10</span> <a href="https://www.the-diff.com/p/how-to-steal-a-customer-base" target="_blank" rel="noopener">How to Steal a Customer Base (Cursor) — The Diff</a></li>
+      <li><span class="source-num">11</span> <a href="https://tremendous.blog/2026/06/23/ai-agent-hype-meets-reality-the-product-doesnt-work-and-churn-is-coming/" target="_blank" rel="noopener">AI Agent Hype Meets Reality: Churn Is Coming — tremendous.blog</a></li>
+      <li><span class="source-num">12</span> <a href="https://techcrunch.com/2026/06/22/spacex-inks-compute-deal-with-reflection-ai-an-open-source-ai-lab" target="_blank" rel="noopener">SpaceX Inks $6.3B Compute Deal with Reflection AI — TechCrunch</a></li>
+      <li><span class="source-num">13</span> <a href="https://investors.micron.com/news-releases/news-release-details/micron-and-anthropic-announce-strategic-agreement-scale-next" target="_blank" rel="noopener">Micron and Anthropic Strategic Agreement — Micron IR</a></li>
+      <li><span class="source-num">14</span> <a href="https://www.theguardian.com/technology/2026/jun/22/anthropic-claude-fable-ai-model-artificial-intelligence-national-security" target="_blank" rel="noopener">Anthropic / NSA / Export Controls — The Guardian, Jun 22</a></li>
+      <li><span class="source-num">15</span> <a href="https://swelljoe.com/post/will-it-mythos/" target="_blank" rel="noopener">Will It Mythos? (Benchmarking Anthropic's security tool) — swelljoe.com</a></li>
+      <li><span class="source-num">16</span> <a href="https://links.tldrnewsletter.com/lVTGVh" target="_blank" rel="noopener">Daybreak: OpenAI Security Tools — TLDR tracking link</a></li>
+      <li><span class="source-num">17</span> <a href="https://unit42.paloaltonetworks.com/openclaw-ai-supply-chain-risk/" target="_blank" rel="noopener">OpenClaw: AI Supply Chain Risk — Palo Alto Unit 42</a></li>
+      <li><span class="source-num">18</span> <a href="https://thehackernews.com/2026/06/github-updates-actionscheckout-to-block.html" target="_blank" rel="noopener">GitHub Updates actions/checkout to Block Pwn Requests — The Hacker News</a></li>
+      <li><span class="source-num">19</span> <a href="https://www.businessinsider.com/meta-ai-training-data-leak-exposed-employee-activity-across-company-2026-6" target="_blank" rel="noopener">Meta AI Training Data Leak Exposed Employee Activity — Business Insider</a></li>
+      <li><span class="source-num">20</span> <a href="https://links.tldrnewsletter.com/NOXz7v" target="_blank" rel="noopener">Tata Electronics Data Breach — TLDR tracking link</a></li>
+      <li><span class="source-num">21</span> <a href="https://links.tldrnewsletter.com/nO9lcG" target="_blank" rel="noopener">FFmpeg PixelSmash RCE — TLDR tracking link</a></li>
+      <li><span class="source-num">22</span> <a href="https://www.cloudflare.com/pt-br/press/press-releases/2026/cloudflare-collaborates-with-leading-browsers-to-develop-a-privacy-first-protocol-for-the-global-internet/" target="_blank" rel="noopener">Cloudflare PACT Privacy Protocol — cloudflare.com</a></li>
+      <li><span class="source-num">23</span> <a href="https://n8n.io/reports/2026-ai-agent-development-tools/" target="_blank" rel="noopener">n8n 2026 AI Agent Builder Report — n8n.io</a></li>
+      <li><span class="source-num">24</span> <a href="https://theburningmonk.com/2026/06/what-you-need-to-know-about-lambda-microvms/" target="_blank" rel="noopener">What You Need to Know About Lambda MicroVMs — theburningmonk.com</a></li>
+      <li><span class="source-num">25</span> <a href="https://links.tldrnewsletter.com/0V2PlR" target="_blank" rel="noopener">Cisco Unified CM CVE-2026-20230 Exploited — TLDR tracking link</a></li>
+      <li><span class="source-num">26</span> <a href="https://links.tldrnewsletter.com/6nW3wy" target="_blank" rel="noopener">Five Eyes AI Cyberattack Warning — TLDR tracking link</a></li>
+      <li><span class="source-num">27</span> <a href="https://links.tldrnewsletter.com/iFJQdy" target="_blank" rel="noopener">US Senate Passes 4-Year CBDC Ban — TLDR tracking link</a></li>
+      <li><span class="source-num">28</span> <a href="https://www.cryptopolitan.com/goldfinch-shuts-down-credit-platform/" target="_blank" rel="noopener">Goldfinch Finance Winds Down — Cryptopolitan</a></li>
+      <li><span class="source-num">29</span> <a href="https://thedefiant.io/news/hacks/secret-network-axelar-bridge-drained-4-67m-infinite-mint-flaw" target="_blank" rel="noopener">Secret Network Axelar Bridge Drained $4.67M — The Defiant</a></li>
+      <li><span class="source-num">30</span> <a href="https://arstechnica.com/space/2026/06/with-starfall-spacex-eyes-an-edge-in-global-cargo-delivery-from-orbit/" target="_blank" rel="noopener">SpaceX Starfall: Orbital Cargo Delivery — Ars Technica</a></li>
+      <li><span class="source-num">31</span> <a href="https://links.tldrnewsletter.com/HFxkY2" target="_blank" rel="noopener">Mark Zuckerberg Directed Meta to Build Prediction Markets App (Arena) — TLDR tracking link</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Generated from 8 TLDR newsletters (Jun 24, 2026) &nbsp;·&nbsp; Wednesday, 24 June 2026
+</div>
+
 </body>
 </html>
