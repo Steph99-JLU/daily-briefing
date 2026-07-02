@@ -1,11 +1,40 @@
 # Daily Briefing
 
-Automated structured daily briefing delivered Mon–Fri at 07:30 CET via:
+Automated intelligence briefing synthesized from Stephan's actual inbox newsletters,
+delivered Mon–Fri via:
 - **GitHub Pages** — mobile-first dark web dashboard
 - **Gmail** — full HTML email
 - **Telegram** — condensed text message (optional)
 
-Powered by Gemini 2.0 Flash (free tier). Zero paid dependencies.
+Powered by GPT-4o, with live web search used narrowly for verification and enrichment.
+
+---
+
+## How it works (v7 pipeline)
+
+1. **Acquire** — logs into Gmail via IMAP and pulls every email received today from
+   the primary newsletters (all TLDR verticals: AI, Founders, IT, Crypto, Dev,
+   DevOps, Information Security, and the standard edition). If nothing arrived
+   today (weekend/holiday), it walks backward up to 7 days to the most recent day
+   that has them, and says so in the briefing.
+2. **Read & filter** — extracts every article link from those newsletters, resolves
+   redirects, dedups by final URL, and crawls each article for its main text
+   (falls back to `[blurb only]` — headline/anchor text — if a fetch fails).
+3. **Verify & enrich** — GPT-4o is given a live web-search tool, used *only* for:
+   - verifying claims that are both high-impact and surprising (funding, M&A,
+     benchmark/SOTA claims, breaches, regulatory action) against an independent
+     Tier-1/Tier-2 source — capped at 5 lookups/run
+   - adding one extra source of context to the top 1–3 headlines — capped at
+     3 lookups/run
+   If the account/model doesn't support the search tool, it falls back to a plain
+   completion (verification/enrichment tags are simply omitted, and the delivered
+   briefing/email footer notes that live search was unavailable that run).
+4. **Write** — organizes by theme (Headlines, AI & Research, Business/Founders/
+   Strategy, Dev/DevOps/Infra, Other), closing with an Analyst Take, Watch/Action,
+   a Verification Log, and a full Source List.
+5. Any other bulk/newsletter-style sender seen today that isn't yet whitelisted is
+   surfaced as a **NEW SENDER DETECTED** banner at the top of the briefing — it's
+   never auto-ingested.
 
 ---
 
@@ -34,22 +63,24 @@ gh repo create daily-briefing --public --source=. --push
 
 ---
 
-### 3. Get a Gemini API key (free)
+### 3. Get an OpenAI API key
 
-1. Go to [aistudio.google.com](https://aistudio.google.com)
-2. Click **Get API key → Create API key**
-3. Copy the key
+1. Go to [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Create a key with access to `gpt-4o`
 
 ---
 
 ### 4. Get a Gmail App Password
 
-> Required because Gmail blocks plain passwords for SMTP.
+> Required because Gmail blocks plain passwords for SMTP/IMAP.
+> This same password is used both to **read** today's newsletters (IMAP) and to
+> **send** the briefing email (SMTP) — no separate credential needed.
 
 1. Enable **2-Factor Authentication** on your Google account (if not already)
-2. Go to [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
-3. App name: `Daily Briefing` → **Create**
-4. Copy the 16-character password (shown once)
+2. Make sure **IMAP is enabled**: Gmail → Settings → Forwarding and POP/IMAP → Enable IMAP
+3. Go to [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+4. App name: `Daily Briefing` → **Create**
+5. Copy the 16-character password (shown once)
 
 ---
 
@@ -59,7 +90,7 @@ Go to **Settings → Secrets and variables → Actions → New repository secret
 
 | Secret name          | Value                                      |
 |----------------------|--------------------------------------------|
-| `GEMINI_API_KEY`     | Your Gemini API key                        |
+| `OPENAI_API_KEY`     | Your OpenAI API key                        |
 | `GMAIL_ADDRESS`      | Your Gmail address (e.g. you@gmail.com)    |
 | `GMAIL_APP_PASSWORD` | 16-char App Password from step 4           |
 | `RECIPIENT_EMAIL`    | Where to send the briefing (can be same)   |
@@ -83,7 +114,7 @@ Go to **Settings → Secrets and variables → Actions → New repository secret
 
 1. Go to **Actions → Daily Briefing**
 2. Click **Run workflow → Run workflow**
-3. Watch the logs — should complete in ~30 seconds
+3. Watch the logs — acquisition + crawl + generation takes a couple of minutes
 4. Check your email and open `https://<you>.github.io/daily-briefing/`
 
 ---
@@ -108,9 +139,9 @@ To get exactly 07:30 in summer, change the cron in `.github/workflows/daily_brie
 ## Local testing
 
 ```bash
-pip install google-generativeai
+pip install -r requirements.txt
 
-export GEMINI_API_KEY="..."
+export OPENAI_API_KEY="..."
 export GMAIL_ADDRESS="..."
 export GMAIL_APP_PASSWORD="..."
 export RECIPIENT_EMAIL="..."
@@ -121,19 +152,40 @@ python briefing.py
 ```
 
 The generated `docs/index.html` opens directly in any browser — no server needed.
+Set `ARCHIVE_DIR=archive` to also save the raw crawled context and the raw
+GPT-4o markdown output for each day.
 
 ---
 
 ## Briefing sections
 
-| # | Section | Content |
-|---|---------|---------|
-| 1 | ⚡ Skill Snacks | 2 practical tips, rotating across PPT / Excel / Python / AI Prompting / Consulting Craft |
-| 2 | 📈 Macro & Markets | Top 3 market moves with ECB/Fed context |
-| 3 | 🤖 AI & Tech | Top 5 signal-over-noise items |
-| 4 | 🌍 Geopolitics & Defense | Top 3 developments, European angle |
-| 5 | 💼 PwC Conversation Starter | 1 topic for CIO advisory client calls |
-| 6 | ⚽ Eintracht Frankfurt | Match result or squad news |
+| Section | Content |
+|---------|---------|
+| 📰 Headlines | 1–3 most consequential stories today |
+| 🤖 AI & Research | Models, capabilities, papers, lab moves |
+| 💼 Business, Founders & Strategy | Funding, business models, market moves |
+| 🛠️ Dev, DevOps & Infra | Tooling, platforms, security (incl. InfoSec) |
+| 🌐 Other | Crypto and general items worth keeping |
+| 🧠 Analyst Take | 3–5 bullets connecting the dots |
+| 📌 Watch / Action | Releases to try, deadlines, risks |
+| ✅ Verification Log | What was checked this run, and any disputes |
+| 🔗 Source List | Every article used, grouped by section, with links |
+
+Any section with no qualifying stories is omitted — the briefing never pads to
+hit a word count.
+
+---
+
+## Configuration
+
+Tunable constants live at the top of `briefing.py`:
+
+- `PRIMARY_SENDER_KEYWORD` — how newsletters are matched (defaults to `"tldr"`,
+  which covers all TLDR verticals)
+- `MAX_FALLBACK_DAYS` — how far back to search if no primary mail arrived today
+- `MAX_VERIFICATION_LOOKUPS` / `MAX_ENRICHMENT_LOOKUPS` — web-search budget per run
+- `MAX_ARTICLES_TO_CRAWL` / `ARTICLE_CHAR_LIMIT` — crawl scope and per-article
+  text budget fed to the model
 
 ---
 
@@ -145,7 +197,8 @@ daily-briefing/
 ├── docs/
 │   └── index.html                       # overwritten daily (GitHub Pages source)
 ├── archive/
-│   └── YYYY-MM-DD.md                    # raw Gemini output, auto-committed
+│   └── YYYY-MM-DD.md                    # raw GPT-4o output, auto-committed
+│   └── YYYY-MM-DD.context.md            # raw crawled source material
 ├── .github/
 │   └── workflows/
 │       └── daily_briefing.yml           # GitHub Actions schedule
@@ -156,6 +209,15 @@ daily-briefing/
 
 ## Limitations
 
-- **Gemini knowledge cutoff**: Gemini 2.0 Flash has a training cutoff and may not know events from the last few weeks. For truly current news, consider enabling Google Search grounding (requires Gemini API Pro tier).
-- **Gmail rate limits**: Free Gmail SMTP allows ~500 emails/day — irrelevant for a single daily send.
-- **GitHub Actions free tier**: 2,000 minutes/month on free accounts. This workflow uses ~1 minute per run × 20 weekdays = ~20 minutes/month.
+- **No headless browser fallback**: if an article fetch is blocked (paywall,
+  JS-rendered content, bot detection), the item is tagged `[blurb only]` and the
+  briefing uses just the newsletter's headline/anchor text — it never invents
+  details.
+- **Web search depends on OpenAI account/model access**: verification and
+  enrichment require the `web_search_preview` tool on the Responses API. If
+  that's unavailable, the script automatically falls back to a plain completion
+  and the footer notes that live search was skipped that run.
+- **IMAP must be enabled** on the Gmail account (see setup step 4) — SMTP alone
+  is not enough to read today's newsletters.
+- **GitHub Actions free tier**: 2,000 minutes/month on free accounts. Crawling
+  adds a couple of minutes per run versus the old single-API-call version.
