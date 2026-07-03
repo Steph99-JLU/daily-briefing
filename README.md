@@ -1,11 +1,33 @@
 # Daily Briefing
 
+Two ways to generate Stephan's daily briefing, in this repo:
+
+1. **`PROMPT.md` (v7, current)** — run as an actual Claude Code session with Gmail MCP access. Reads today's real newsletters, crawls the linked articles, verifies the few high-impact/surprising claims against independent sources, and writes a themed markdown briefing to `archive/YYYY-MM-DD.md`. See "Why this exists" in `PROMPT.md` for the full rationale. Invoke via the `daily-briefing` skill (`.claude/skills/daily-briefing/`) or by running `PROMPT.md`'s instructions directly in a session.
+2. **`briefing.py` (legacy)** — a scheduled GitHub Actions workflow that calls an LLM chat-completion API (currently GPT-4o) with a large persona prompt and asks it to generate a briefing from its own training data. Kept for the delivery pipeline (GitHub Pages / Gmail / Telegram formatting), documented below. **Caveat:** an LLM API call has a training cutoff and cannot know what happened today, so treat its "current events" content as illustrative, not factual — `PROMPT.md` exists specifically to fix this by grounding every claim in a fetched source.
+
+---
+
+## Option 1: `PROMPT.md` (v7) — real newsletters, verified
+
+Requires a Claude Code session (CLI, web, or a scheduled Trigger) with Gmail MCP connected to the inbox that receives the TLDR newsletters.
+
+```
+# In a Claude Code session with Gmail access:
+Run the daily-briefing skill (or paste PROMPT.md's content as the task).
+```
+
+Output is written to `archive/YYYY-MM-DD.md`. To run it every weekday morning automatically, configure a recurring Claude Code on the web Trigger against this repo — see [code.claude.com/docs/en/claude-code-on-the-web](https://code.claude.com/docs/en/claude-code-on-the-web). This is session-driven (it needs live tool access to Gmail/web), so it cannot run as a plain GitHub Actions script the way `briefing.py` does.
+
+---
+
+## Option 2: `briefing.py` (legacy) — automated, API-only
+
 Automated structured daily briefing delivered Mon–Fri at 07:30 CET via:
 - **GitHub Pages** — mobile-first dark web dashboard
 - **Gmail** — full HTML email
 - **Telegram** — condensed text message (optional)
 
-Powered by Gemini 2.0 Flash (free tier). Zero paid dependencies.
+Zero paid dependencies beyond the LLM API key.
 
 ---
 
